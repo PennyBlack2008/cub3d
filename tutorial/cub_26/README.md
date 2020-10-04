@@ -1,4 +1,6 @@
 두 가지가 발전했습니다.
+밑의 사진은 코드 업데이트 전이라 결과물과 상이함
+
 ![raycast_basic_1](https://user-images.githubusercontent.com/59194905/94105278-e7b03380-fe73-11ea-8c13-28ce909cff64.gif)
 
 1. move.c 함수를 추가하여 플레이어가 벽을 뚫고 지나가지 못하도록 전후좌우, 회전을 제한했습니다.
