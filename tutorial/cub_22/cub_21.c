@@ -42,7 +42,7 @@ int					init_struct_win(t_win *w)
 	// player
 	w->player.x = WIN_WIDTH / 2;
 	w->player.y = WIN_HEIGHT / 2;
-	w->player.ang = 10 * M_PI / 180;
+	w->player.ang = 0 * M_PI / 180;
 	return (0);
 }
 

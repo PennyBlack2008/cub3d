@@ -30,37 +30,35 @@ int				key_press(int keycode, t_win *w)
 		mlx_destroy_window(w->mlx, w->win);
 		exit(1);
 	}
-	if (keycode == KEY_W) // 위로
+	if (keycode == KEY_W) // 플레이어 정면으로 이동
 	{
-		// w->player.y -= 10;
-		w->player.x -= 10 * cos(NINETY_DEGREE - w->player.ang);
-		w->player.y -= 10 * sin(NINETY_DEGREE - w->player.ang);
+		w->player.x += 10 * cos(w->player.ang * -1);
+		w->player.y -= 10 * sin(w->player.ang * -1);
+		printf("player 위치 : %d %d\n", w->player.x, w->player.y);
 	}
-	if (keycode == KEY_A) // 왼쪽으로
+	if (keycode == KEY_A) // 플레이어 왼쪽으로 이동
 	{
-		// w->player.x -= 10;
-		w->player.x -= 10 * cos(w->player.ang);
-		w->player.y += 10 * sin(w->player.ang);
+		w->player.x -= 10 * cos(M_PI_2 - (w->player.ang * -1));
+		w->player.y -= 10 * sin(M_PI_2 - (w->player.ang * -1));
 	}
-	if (keycode == KEY_S) // 밑으로
+	if (keycode == KEY_S) // 플레이어 뒤쪽으로 이동
 	{
-		// w->player.y += 10;
-		w->player.x += 10 * cos(NINETY_DEGREE - w->player.ang);
-		w->player.y += 10 * sin(NINETY_DEGREE - w->player.ang);
+		w->player.x -= 10 * cos(w->player.ang * -1);
+		w->player.y += 10 * sin(w->player.ang * -1);
+		printf("player 위치 : %d %d\n", w->player.x, w->player.y);
 	}
-	if (keycode == KEY_D) // 오른쪽으로
+	if (keycode == KEY_D) // 플레이어 오른쪽으로 이동
 	{
-		// w->player.x += 10;
-		w->player.x += 10 * cos(w->player.ang);
-		w->player.y -= 10 * sin(w->player.ang);
+		w->player.x += 10 * cos(M_PI_2 - (w->player.ang * -1));
+		w->player.y += 10 * sin(M_PI_2 - (w->player.ang * -1));
 	}
 	if (keycode == KEY_LEFT) // 각도 왼쪽으로
 	{
-		w->player.ang += 30 * M_PI / 180;
+		w->player.ang -= 30 * M_PI / 180;
 	}
 	if (keycode == KEY_RIGHT) // 각도 오른쪽으로
 	{
-		w->player.ang -= 30 * M_PI / 180;
+		w->player.ang += 30 * M_PI / 180;
 	}
 	if (keycode == KEY_H)
 	{

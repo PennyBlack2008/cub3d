@@ -26,37 +26,37 @@ int				key_press(int keycode, t_win *w)
 		mlx_destroy_window(w->mlx, w->win);
 		exit(1);
 	}
-	if (keycode == KEY_W) // 위로
+	if (keycode == KEY_W) // 플레이어 정면으로
 	{
+		w->player.x += 10 * cos(w->player.ang);
+		w->player.y -= 10 * sin(w->player.ang);
 		// w->player.y -= 10;
-		w->player.x -= 10 * cos(NINETY_DEGREE - w->player.ang);
-		w->player.y -= 10 * sin(NINETY_DEGREE - w->player.ang);
 	}
-	if (keycode == KEY_A) // 왼쪽으로
+	if (keycode == KEY_A) // 플레이어 뒤쪽으로
 	{
 		// w->player.x -= 10;
-		w->player.x -= 10 * cos(w->player.ang);
-		w->player.y += 10 * sin(w->player.ang);
+		w->player.x -= 10 * cos(NINETY_DEGREE - w->player.ang);
+		w->player.y -= 10 * sin(NINETY_DEGREE - w->player.ang);
 	}
 	if (keycode == KEY_S) // 밑으로
 	{
 		// w->player.y += 10;
-		w->player.x += 10 * cos(NINETY_DEGREE - w->player.ang);
-		w->player.y += 10 * sin(NINETY_DEGREE - w->player.ang);
+		w->player.x -= 10 * cos(w->player.ang);
+		w->player.y += 10 * sin(w->player.ang);
 	}
 	if (keycode == KEY_D) // 오른쪽으로
 	{
 		// w->player.x += 10;
-		w->player.x += 10 * cos(w->player.ang);
-		w->player.y -= 10 * sin(w->player.ang);
+		w->player.x += 10 * cos(NINETY_DEGREE - w->player.ang);
+		w->player.y += 10 * sin(NINETY_DEGREE - w->player.ang);
 	}
-	if (keycode == KEY_LEFT) // 각도 왼쪽으로
-	{
-		w->player.ang += 30 * M_PI / 180;
-	}
-	if (keycode == KEY_RIGHT) // 각도 오른쪽으로
+	if (keycode == KEY_LEFT) // 시계 반대 방향으로 회전만
 	{
 		w->player.ang -= 30 * M_PI / 180;
+	}
+	if (keycode == KEY_RIGHT) // 시계 방향으로 회전만
+	{
+		w->player.ang += 30 * M_PI / 180;
 	}
 	if (keycode == KEY_H)
 	{

@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <math.h>
-#include <stdlib.h>
 
 // WIN SPEC
 #define WIN_WIDTH 1000
@@ -20,18 +19,13 @@
 #define FILEEND 0
 
 // KEY
-# define KEY_W			13
-# define KEY_A			0
 # define KEY_S			1
 # define KEY_D			2
-
-# define KEY_LEFT		123
-# define KEY_RIGHT		124
-
 # define KEY_F			3
 # define KEY_G			5
 # define KEY_H			4
-
+# define KEY_W			13
+# define KEY_A			0
 # define KEY_ESC		53
 
 /*
@@ -40,17 +34,9 @@
 ** Angle between subsequent rays = 60/320 degrees
 */
 
-typedef struct	s_pos
-{
-	double		x;
-	double		y;
-}				t_pos;
 
 typedef struct			s_player
 {
-	// player figure
-	int					width;
-	int					height;
 	int					color;
 
 	// 화살표 각도(시야각)
@@ -61,8 +47,6 @@ typedef struct			s_player
 	// player 위치
 	int					x;
 	int					y;
-	char*				str_KEY_W; // 빨간색 끝에 적어줄 글자
-	char*				str_KEY_D; // 파란색 끝에 적어줄 글자
 }						t_player;
 
 typedef struct  s_img
@@ -100,19 +84,5 @@ typedef struct 			s_win
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int						draw_player(t_win *w);
 int						draw_grid(t_win *w);
-int						draw_background(t_win *w);
-void					draw_line(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_win *w);
-void					map_init(t_win *w);
-void					draw_map(t_win *w);
-void					draw_rectangle(t_win *w, int x, int y, int color);
-int						is_wall(double x, double y, t_win *w);
-int						rotate_right(t_win *w);
-int						rotate_left(t_win *w);
-int						move_forward(t_win *w);
-int						move_back(t_win *w);
-int						move_left(t_win *w);
-int						move_right(t_win *w);
-int						draw_ray(t_win *w, double ang);
-int						draw_rays(t_win *w);
 
 #endif

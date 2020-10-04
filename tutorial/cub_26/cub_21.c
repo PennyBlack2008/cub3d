@@ -39,25 +39,21 @@ int				key_press(int keycode, t_win *w)
 	}
 	if (keycode == KEY_W) // 위로
 	{
-		// w->player.y -= 10;
-		if (move_up(w) == WALL)
+		if (move_forward(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
 	if (keycode == KEY_A) // 왼쪽으로
 	{
-		// w->player.x -= 10;
 		if (move_left(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
 	if (keycode == KEY_S) // 밑으로
 	{
-		// w->player.y += 10;
-		if (move_down(w) == WALL)
+		if (move_back(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
 	if (keycode == KEY_D) // 오른쪽으로
 	{
-		// w->player.x += 10;
 		if (move_right(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
