@@ -8,6 +8,7 @@
 int					rotate_right(t_win *w)
 {
 	w->player.ang += 30 * M_PI / 180;
+	w->player.ang = normalize_angle(w->player.ang);
 	return (NOT_WALL);
 }
 
@@ -15,6 +16,7 @@ int					rotate_right(t_win *w)
 int					rotate_left(t_win *w)
 {
 	w->player.ang -= 30 * M_PI / 180;
+	w->player.ang = normalize_angle(w->player.ang);
 	return (NOT_WALL);
 }
 

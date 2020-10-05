@@ -91,10 +91,14 @@ int			is_wall(double x, double y, t_win *w)
 	Y = (int)(y / TILE_LENGTH);
 	if (y / TILE_LENGTH > 9)
 		Y = 9;
-	
+	else if (y / TILE_LENGTH < 0)
+		Y = 0;
+
 	X = (int)(x / TILE_LENGTH);
 	if (x / TILE_LENGTH > 9)
 		X = 9;
+	else if (x / TILE_LENGTH < 0)
+		X = 0;
 
 	if (w->map.map[Y][X] == WALL)
 		return (WALL);
@@ -102,40 +106,58 @@ int			is_wall(double x, double y, t_win *w)
 	return (NOT_WALL);
 }
 
+// 8 분의 1로 나누어 계산하는 것이 맞을듯
 int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
 {
-		if (0 == r->ang)
-		{
-			return(is_wall(x + 1, y, w));
-		}
-		else if (0 < r->ang && r->ang < M_PI_2)
-		{
-			return(is_wall(x + 1, y + 1, w));
-		}
-		else if (M_PI_2 == r->ang)
-		{
-			return(is_wall(x , y + 1, w));
-		}
-		else if (M_PI_2 < r->ang && r->ang < M_PI)
-		{
-			return(is_wall(x - 1, y + 1, w));
-		}
-		else if (M_PI == r->ang)
-		{
-			return(is_wall(x - 1, y, w));
-		}
-		else if (M_PI < r->ang && r->ang < M_PI_2 * 3)
-		{
-			return(is_wall(x - 1, y - 1, w));
-		}
-		else if (M_PI_2 * 3 == r->ang)
-		{
-			return(is_wall(x, y - 1, w));
-		}
-		else if (M_PI_2 * 3 < r->ang && r->ang < 2 * M_PI)
-		{
-			return(is_wall(x + 1, y - 1, w));
-		}
-		
+	r->ang = normalize_angle(r->ang);
+	if (0 == r->ang)
+	{
+		return(is_wall(x, y, w));
+	}
+	else if (0 < r->ang && r->ang < M_PI_4)
+	{
+		return(is_wall(x, y, w));
+	}
+	else if (M_PI_4 < r->ang && r->ang < M_PI_2)
+	{
+		return(is_wall(x, y, w));
+	}
+	else if (M_PI_2 == r->ang)
+	{
+		return(is_wall(x , y, w));
+	}
+	else if (M_PI_2 < r->ang && r->ang < M_PI_2 + M_PI_4)
+	{
+		return(is_wall(x, y, w));
+	}
+	else if (M_PI_2 + M_PI_4 < r->ang && r->ang < M_PI)
+	{
+		return(is_wall(x - 1, y, w));
+	}
+	else if (M_PI == r->ang)
+	{
+		return(is_wall(x - 1, y, w));
+	}
+	else if (M_PI < r->ang && r->ang < M_PI + M_PI_4)
+	{
+		return(is_wall(x - 1, y, w));
+	}
+	else if (M_PI + M_PI_4 < r->ang && r->ang < M_PI_2 * 3)
+	{
+		return(is_wall(x, y, w));
+	}
+	else if (M_PI_2 * 3 == r->ang)
+	{
+		return(is_wall(x, y - 1, w));
+	}
+	else if (M_PI_2 * 3 < r->ang && r->ang < M_PI_2 * 3 + M_PI_4)
+	{
+		return(is_wall(x, y - 1, w));
+	}
+	else if (M_PI_2 * 3 + M_PI_4 < r->ang && r->ang < 2 * M_PI)
+	{
+		return(is_wall(x, y, w));
+	}
+
 	return (0);
 }

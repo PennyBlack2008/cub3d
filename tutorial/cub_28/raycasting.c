@@ -138,14 +138,14 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		B.y = w->player.y + tan(r->ang) * (B.x - w->player.x);
 	else if ((M_PI_2 < r->ang && r->ang < M_PI) || (M_PI_2 * 3 < r->ang && r->ang < M_PI * 2))
 		B.y = w->player.y - tan(r->ang) * (B.x - w->player.x);
-	
+
 	double Xb;
 	double Yb;
 
 	Xb = TILE_LENGTH;
 	Yb = fabs(TILE_LENGTH * tan(2 * M_PI - r->ang));
 	restrain_length(&Yb, w);
-	
+
 	while(is_wall_ray(B.x, B.y, r, w) == NOT_WALL && B.x < w->R_width && B.y < w->R_height && B.x > 0 && B.y > 0)
 	{
 		if (0 == r->ang)
@@ -230,7 +230,7 @@ void		draw_rays(t_win *w)
 	{
 		r[i].ang = normalize_angle(ray_angle);
 		draw_ray(&r[i], w);
-		ray_angle -= w->fov / w->R_width;
+		ray_angle -= w->fov / (w->R_width);
 		i++;
 		printf("카운트 i: %d\n", i);
 	}
