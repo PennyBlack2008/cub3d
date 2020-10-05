@@ -18,11 +18,8 @@ static void plot_line_low(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_w
 	dx = p2_x - p1_x;
 	dy = p2_y - p1_y;
 	yi = 1;
-	if (dy < 0)
-	{
-		yi = -1;
+	if (dy < 0 && (yi = -1))
 		dy = -dy;
-	}
 	D = 2 * dy - dx;
 	while (p_x <= p2_x)
 	{
@@ -53,11 +50,8 @@ static void plot_line_high(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_
 	dx = p2_x - p1_x;
 	dy = p2_y - p1_y;
 	xi = 1;
-	if (dx < 0)
-	{
-		xi = -1;
+	if (dx < 0 && (xi = -1))
 		dx = -dx;
-	}
 	D = 2 * dx - dy;
 	while (p_y <= p2_y)
 	{
@@ -66,7 +60,6 @@ static void plot_line_high(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_
 		if (D > 0)
 		{
 			p_x += xi;
-			// D += 2 * (dx - dy);
 			D -= 2 * dy;
 		}
 		D += 2 * dx;

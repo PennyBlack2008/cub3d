@@ -9,21 +9,10 @@
 #include <math.h>
 #include <stdlib.h>
 
-// WIN SPEC
-#define WIN_WIDTH 1000
-#define WIN_HEIGHT 1000
-// #define fov 60
-
-// WALL SPEC
-#define TILE_LENGTH	100 
-
+// WALL
+#define TILE_LENGTH 100
 #define WALL 49 // ascii #1
 #define NOT_WALL 48 // ascii #0
-
-#define WALL_NO 0 // cardinal direction
-#define WALL_SO 1
-#define WALL_WE 2
-#define WALL_EA 3
 
 // DEBUG
 #define ERROR 0
@@ -45,9 +34,6 @@
 
 # define KEY_ESC		53
 
-# define TRUE			1
-# define FALSE			0
-
 /*
 ** Center of the Projection Plane = (160,100)
 ** Distance to the Projection Plane = 277 units
@@ -60,24 +46,6 @@ typedef struct		s_plot
 	double			y;
 }					t_plot;
 
-// 함수 cast_a_ray 에서 만들어진 ray 의 정체성을 가져다 준다. 그래서 ray[0], [1], [2] 등등의 광선들이 이 함수를 통해 하나씩 정의된다.
-typedef struct	s_ray
-{
-	double		ang;
-	double		distance;
-	t_plot		hit_pos;
-
-	int			washit_vert;
-	// ray direction
-	int			isup;
-	int			isdown;
-	int			isleft;
-	int			isright;
-
-	// wall texture by cardinal direction
-	int			wall_face;
-}				t_ray;
-
 typedef struct			s_player
 {
 	// player figure
@@ -87,8 +55,6 @@ typedef struct			s_player
 
 	// 화살표 각도(시야각)
 	double				ang;
-	int					pdi;
-	int					pdj;
 
 	// player 위치
 	int					x;
@@ -96,6 +62,11 @@ typedef struct			s_player
 	char*				str_KEY_W; // 빨간색 끝에 적어줄 글자
 	char*				str_KEY_D; // 파란색 끝에 적어줄 글자
 }						t_player;
+
+typedef struct		s_ray
+{
+	double			ang;
+}					t_ray;
 
 typedef struct  s_img
 {
@@ -117,7 +88,6 @@ typedef struct	s_map
 	int			j;
 }				t_map;
 
-
 typedef struct 			s_win
 {
 	void				*mlx;
@@ -125,6 +95,7 @@ typedef struct 			s_win
 	int					R_width;
 	int					R_height;
 	double				fov;
+
 	t_img				img;
 	t_map				map;
 	t_player			player;
@@ -141,16 +112,12 @@ void					draw_rectangle(t_win *w, int x, int y, int color);
 int						is_wall(double x, double y, t_win *w);
 int						rotate_right(t_win *w);
 int						rotate_left(t_win *w);
-int						move_up(t_win *w);
-int						move_down(t_win *w);
+int						move_forward(t_win *w);
+int						move_back(t_win *w);
 int						move_left(t_win *w);
 int						move_right(t_win *w);
 void					draw_ray(t_ray *r, t_win *w);
-double					normalize_angle(double ang);
-int						is_wall(double x, double y, t_win *w);
-void					cast_all_rays(t_win *w);
-t_plot					set_plot(double x, double y);
-int						is_wall_ray(double x, double y, t_ray *r, t_win *w);
 void					draw_rays(t_win *w);
+int						is_wall_ray(double x, double y, t_ray *r, t_win *w);
 
 #endif

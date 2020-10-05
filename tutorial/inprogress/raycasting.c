@@ -9,27 +9,6 @@ double					normalize_angle(double ang)
 	return (ang);
 }
 
-static void				check_ray_direction(t_ray *r, double ang)
-{
-	r->ang = ang;
-	r->isdown = ang > 0 && ang < M_PI;
-	r->isup = !r->isdown;
-	r->isright = ang < M_PI_2 || ang > 3 * M_PI_2;
-	r->isleft = !r->isright;
-}
-
-static int			find_wall_face(t_ray *r)
-{
-	if (r->isdown && !r->washit_vert)
-		return (WALL_NO);
-	else if (r->isup && !r->washit_vert)
-		return (WALL_SO);
-	else if (r->isleft && r->washit_vert)
-		return (WALL_EA);
-	else
-		return (WALL_WE);
-}
-
 t_plot		set_plot(double x, double y)
 {
 	t_plot	plot;
@@ -63,6 +42,20 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 		A.x = w->player.x - (A.y - w->player.y) / tan(r->ang);
 
 	printf("intercept A(%f, %f)\n", A.x, A.y);
+
+	if (A.x < 0)
+	{
+		A.x = 0;
+		printf("이 광선은 특별 처리: %f\n", r->ang * 180 / M_PI);
+		return (A);
+	}
+	else if (A.x > w->R_width)
+	{
+		A.x = w->R_width;
+		printf("이 광선은 특별 처리: %f\n", r->ang * 180 / M_PI);
+		return (A);
+	}
+
 	double	Xa;
 	double	Ya;
 	Ya = TILE_LENGTH;
@@ -160,11 +153,11 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 
 	Xb = TILE_LENGTH;
 	Yb = fabs(TILE_LENGTH * tan(2 * M_PI - r->ang));
-	
+
 	printf("Xb length : %f\n", Xb);
 	printf("Yb length : %f\n", Yb);
 	printf("Yb angle : %f\n", (2 * M_PI - r->ang) * 180 / M_PI);
-	
+
 	while(is_wall_ray(B.x, B.y, r, w) == NOT_WALL)
 	{
 		if (0 == r->ang)
@@ -250,20 +243,21 @@ void		draw_ray(t_ray *r, t_win *w)
 
 void		draw_rays(t_win *w)
 {
-	t_ray	r[w->R_width];
+	t_ray	r[w->R_width / 10];
 	int		i;
 	double	ray_angle;
 
 	// 초기화
 	i = 0;
 	ray_angle = normalize_angle(w->player.ang + w->fov / 2);
+	printf("w->player.ang + w->fov / 2 : %f\n", w->player.ang + w->fov / 2);
 	// printf("r.ang = %f\n", r.ang * 180 / M_PI);
-	// while (ray_angle > w->player.ang - w->fov / 2)
-	while (i < 1)
+	printf("w->player.ang - w->fov / 2 : %f\n", w->player.ang - w->fov / 2);
+	while (ray_angle > w->player.ang - w->fov / 2)
 	{
 		r[i].ang = ray_angle;
 		draw_ray(&r[i], w);
-		ray_angle -= w->fov / w->R_width;
+		ray_angle -= w->fov / w->R_width * 10;
 		i++;
 		printf("카운트 i: %d\n", i);
 	}

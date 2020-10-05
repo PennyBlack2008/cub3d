@@ -4,8 +4,6 @@
 #define WALL 49
 #define NOT_WALL 48
 
-
-
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char				*dst;
@@ -17,11 +15,11 @@ void					my_mlx_pixel_put(t_img *img, int x, int y, int color)
 int     render_next_frame(t_win *w)
 {
 	draw_background(w);
+	// draw_grid(w);
 	draw_map(w);
-	draw_grid(w);
 	draw_player(w);
-	draw_rays(w);
 	// draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
+	draw_rays(w);
 	return (0);
 }
 
@@ -39,25 +37,21 @@ int				key_press(int keycode, t_win *w)
 	}
 	if (keycode == KEY_W) // 위로
 	{
-		// w->player.y -= 10;
-		if (move_up(w) == WALL)
+		if (move_forward(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
 	if (keycode == KEY_A) // 왼쪽으로
 	{
-		// w->player.x -= 10;
 		if (move_left(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
 	if (keycode == KEY_S) // 밑으로
 	{
-		// w->player.y += 10;
-		if (move_down(w) == WALL)
+		if (move_back(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
 	if (keycode == KEY_D) // 오른쪽으로
 	{
-		// w->player.x += 10;
 		if (move_right(w) == WALL)
 			printf("벽을 뚫고 지나가지 못합니다.\n");
 	}
@@ -73,7 +67,7 @@ int				key_press(int keycode, t_win *w)
 	}
 	if (keycode == KEY_H)
 	{
-		draw_line(500, 500, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
+		// draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
 	}
 	if (keycode == KEY_G)
 	{
@@ -89,23 +83,23 @@ int					init_struct_win(t_win *w)
 	w->mlx = mlx_init();
 
 	// 해상도
-	w->R_width = WIN_WIDTH;
-	w->R_height = WIN_HEIGHT;
-	w->fov = 60 * M_PI / 180;
+	w->R_width = 1000;
+	w->R_height = 1000;
+	w->fov = M_PI / 3;
 
 	// 윈도우
 	w->win = mlx_new_window(w->mlx, w->R_width, w->R_height, "veryluckymanjinwoo");
 
 	// 이미지 size: 30 X 30
-	w->img.ptr = mlx_new_image(w->mlx, WIN_WIDTH, WIN_HEIGHT);		w->img.addr = mlx_get_data_addr(w->img.ptr, &w->img.bits_per_pixel, &w->img.line_length, &w->img.endian);
+	w->img.ptr = mlx_new_image(w->mlx, w->R_width, w->R_height);		w->img.addr = mlx_get_data_addr(w->img.ptr, &w->img.bits_per_pixel, &w->img.line_length, &w->img.endian);
 	w->img.x = 0;		w->img.y = 0; // 이미지의 위치
 
 	// player
 	w->player.width = 30;
 	w->player.height = 30;
-	w->player.x = WIN_WIDTH / 2;
-	w->player.y = WIN_HEIGHT / 2;
-	w->player.ang = 270 * M_PI / 180;
+	w->player.x = w->R_width / 2;
+	w->player.y = w->R_height / 2;
+	w->player.ang = M_PI_2 * 3;
 
 	// map
 	map_init(w);
