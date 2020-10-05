@@ -1,17 +1,38 @@
-두 가지가 발전했습니다.
+광선들이 벽에 부딪히면 멈추도록 cub_26의 코드에서 if 문만 추가하여 만들었습니다.
+
 밑의 사진은 코드 업데이트 전이라 결과물과 상이함
 
-![raycast_basic_1](https://user-images.githubusercontent.com/59194905/94105278-e7b03380-fe73-11ea-8c13-28ce909cff64.gif)
+![ray_casting_basic_2](https://user-images.githubusercontent.com/59194905/94107582-c56ce480-fe78-11ea-9c51-ab056503aed7.gif)
 
-1. move.c 함수를 추가하여 플레이어가 벽을 뚫고 지나가지 못하도록 전후좌우, 회전을 제한했습니다.
+map.c 의 픽셀이 벽에 해당되는 지 판단해주는 int is_wall(double x, double y, t_win *w) 함수를 사용하였습니다.
 
-2. fov 60 도로 설정하여 부채꼴 모양으로 플레이어가 보는 ray들을 만들었습니다. test2.c에서 예전에 플레이어의 수직을 가리키는 빨간 선을 그리는 함수(코드)를 변형하여
+test2.c 에 있는 함수 draw_ray 코드입니다.
+```
+int					draw_ray(t_win *w, double ang)
+{
+	int x, y;
+	double pos_x, pos_y;
+	double add_player_x, add_player_y;
 
-int					draw_ray(t_win *w, double ang) 함수를 만들었습니다.
+	x = 0;
+	while (x < WIN_WIDTH / 2)
+	{
+		y = 0;
+		pos_x = x * cos((w->player.ang + ang) * -1) + y * sin((w->player.ang + ang) * -1);
+		pos_y = x * sin((w->player.ang + ang) * -1) * -1 + y * cos((w->player.ang + ang) * -1);
+		add_player_x = pos_x + w->player.x;
+		add_player_y = pos_y + w->player.y;
+		if (add_player_x >= 0 && add_player_y >= 0)
+		{
+			my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xFF0000);
+			if (is_wall(add_player_x, add_player_y, w) == WALL) // <----- 여기가 중요!
+				break ;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
+	return (0);
+}
+```
 
-
-고민했던 점
-
-첫 번째, fov각도를 이용해 광선을 계산하고자 했으나 예상하지 못한 출력이 자꾸 나와서 간단한 코드인 수직을 만들어 그것을 회전시키는 함수로 만들었습니다. 간단한 코드를 일단 만들고 회전하는 것이 좋다고 느꼈고 cos, sin, tan 함수는 각도에 따라서 여러 상황이 발생할 수 있어서 최대한 간단한 코드에서 변형하는 것이 좋다는 것을 깨달았습니다.
-
-두 번째, 광선을 window 크기의 최대로 늘려서 광선이 멈추지 않도록 만들고자 했지만, 광선의 크기가 크면 왜 그런지 모르겠으나 갑자기 옆에서 광선 한개가 더 나오는 상황이 발생했습니다. 그래서 광선의 크기를 일정 수준으로 제한했습니다. 생각을 해보니 벽이 플레이어로부터 정말 멀지 않으면 문제가 없을 것이라고 판단했습니다. 만약 벽이 정말 멀다면 광선이 벽에 부딪히지 않았기 때문에 문제가 생길 것입니다.
+주의할 점은 함수 is_wall 는 move.c 파일에서 이미 많이 사용되고 있으니 변형할 때는 move.c 파일에 있는 함수들도 같이 고려해서 바꾸어야합니다.

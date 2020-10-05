@@ -1,25 +1,10 @@
 #include "cub_21.h"
-
 #define ROWS 10
 #define COLS 10
-
-int					draw_background(t_win *w)
-{
-	int				x,y;
-
-	x = 0;
-	while (x < w->R_width)
-	{
-		x++;
-		y = 0;
-		while (y < w->R_height)
-		{
-			my_mlx_pixel_put(&w->img, x, y, 0x000000);
-			y++;
-		}
-	}
-	return (0);
-}
+#define WALL 49 // ascii #1
+#define NOT_WALL 48 // ascii #0
+#define TILE_HEIGHT	100 //WIN_HEIGHT / ROWS
+#define TILE_WIDTH 100 //WIN_WIDTH / COLS
 
 void	map_init(t_win *w)
 {
@@ -32,7 +17,7 @@ void	map_init(t_win *w)
 		w->map.map[i] = (char *)malloc(sizeof(char) * COLS);
 		i++;
 	}
-	w->map.map[0] = "1111111111";
+	w->map.map[0] = "1111111111"; //<--------- 여기 문법에서 세그폴트난다.
 	w->map.map[1] = "1000001011";
 	w->map.map[2] = "1000100011";
 	w->map.map[3] = "1010111011";
@@ -52,15 +37,15 @@ void	draw_rectangle(t_win *w, int x, int y, int color)
 	int i, j;
 
 	// x, y 는 각각 원점에서 대각선 위치에 있는 점의 x, y 좌표가 된다. x는 사각형의 너비, y는 사각형의 높이
-	x *= w->R_height / ROWS; // ROWS: 4
-	y *= w->R_width / COLS; // COLS: 10
+	x *= WIN_HEIGHT / ROWS; // ROWS: 4
+	y *= WIN_WIDTH / COLS; // COLS: 10
 	// printf("x :%d, y: %d \n", x, y);
 	// 초기값 x
 	i = 0;
-	while (i < w->R_width / COLS)
+	while (i < WIN_WIDTH / COLS)
 	{
 		j = 0;
-		while (j < w->R_height / ROWS)
+		while (j < WIN_WIDTH / ROWS)
 		{
 			my_mlx_pixel_put(&w->img, y + i, x + j, color);
 			j++;
@@ -103,50 +88,8 @@ void	draw_map(t_win *w)
 
 int			is_wall(double x, double y, t_win *w)
 {
-	if (w->map.map[(int)(y / TILE_LENGTH)][(int)(x / TILE_LENGTH)] == WALL)
+	if (w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)] == WALL)
 		return (WALL);
 	// printf("w->map.map[%d][%d] = %d\n", (int)(y / TILE_WIDTH), (int)(x / TILE_HEIGHT), w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)]);
 	return (NOT_WALL);
-}
-
-int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
-{
-		if (0 == r->ang)
-		{
-			return(is_wall(x + 1, y, w));
-		}
-		else if (0 < r->ang && r->ang < M_PI_2)
-		{
-			printf("제 1사분면\n");
-			return(is_wall(x + 1, y + 1, w));
-		}
-		else if (M_PI_2 == r->ang)
-		{
-			return(is_wall(x , y + 1, w));
-		}
-		else if (M_PI_2 < r->ang && r->ang < M_PI)
-		{
-			printf("제 2사분면\n");
-			return(is_wall(x - 1, y + 1, w));
-		}
-		else if (M_PI == r->ang)
-		{
-			return(is_wall(x - 1, y, w));
-		}
-		else if (M_PI < r->ang && r->ang < M_PI_2 * 3)
-		{
-			printf("제 3사분면\n");
-			return(is_wall(x - 1, y - 1, w));
-		}
-		else if (M_PI_2 * 3 == r->ang)
-		{
-			return(is_wall(x, y - 1, w));
-		}
-		else if (M_PI_2 * 3 < r->ang && r->ang < 2 * M_PI)
-		{
-			printf("제 4사분면\n");
-			return(is_wall(x + 1, y - 1, w));
-		}
-
-	return (0);
 }

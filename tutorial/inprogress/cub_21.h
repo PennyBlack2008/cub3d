@@ -9,10 +9,10 @@
 #include <math.h>
 #include <stdlib.h>
 
-// WALL
-#define TILE_LENGTH 100
-#define WALL 49 // ascii #1
-#define NOT_WALL 48 // ascii #0
+// WIN SPEC
+#define WIN_WIDTH 1000
+#define WIN_HEIGHT 1000
+#define fov 60
 
 // DEBUG
 #define ERROR 0
@@ -40,11 +40,18 @@
 ** Angle between subsequent rays = 60/320 degrees
 */
 
-typedef struct		s_plot
+typedef struct	s_pos
 {
-	double			x;
-	double			y;
-}					t_plot;
+	double		x;
+	double		y;
+}				t_pos;
+
+typedef struct	s_ray
+{
+	double		ang;
+	double		x;
+	double		y;
+}				t_ray;
 
 typedef struct			s_player
 {
@@ -55,6 +62,8 @@ typedef struct			s_player
 
 	// 화살표 각도(시야각)
 	double				ang;
+	int					pdi;
+	int					pdj;
 
 	// player 위치
 	int					x;
@@ -62,11 +71,6 @@ typedef struct			s_player
 	char*				str_KEY_W; // 빨간색 끝에 적어줄 글자
 	char*				str_KEY_D; // 파란색 끝에 적어줄 글자
 }						t_player;
-
-typedef struct		s_ray
-{
-	double			ang;
-}					t_ray;
 
 typedef struct  s_img
 {
@@ -88,14 +92,13 @@ typedef struct	s_map
 	int			j;
 }				t_map;
 
+
 typedef struct 			s_win
 {
 	void				*mlx;
 	void				*win;
 	int					R_width;
 	int					R_height;
-	double				fov;
-
 	t_img				img;
 	t_map				map;
 	t_player			player;
@@ -116,8 +119,7 @@ int						move_forward(t_win *w);
 int						move_back(t_win *w);
 int						move_left(t_win *w);
 int						move_right(t_win *w);
-void					draw_ray(t_ray *r, t_win *w);
-void					draw_rays(t_win *w);
-int						is_wall_ray(double x, double y, t_ray *r, t_win *w);
+int						draw_ray(t_ray *r, t_win *w);
+int						draw_rays(t_win *w);
 
 #endif

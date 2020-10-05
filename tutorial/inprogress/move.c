@@ -8,7 +8,7 @@
 int					rotate_right(t_win *w)
 {
 	int	x, y;
-	
+
 	double pos_x, pos_y;
 	double add_player_x, add_player_y;
 	double new_angle;
@@ -41,7 +41,7 @@ int					rotate_right(t_win *w)
 int					rotate_left(t_win *w)
 {
 	int	x, y;
-	
+
 	double pos_x, pos_y;
 	double add_player_x, add_player_y;
 	double new_angle;
@@ -70,11 +70,10 @@ int					rotate_left(t_win *w)
 	return (NOT_WALL);
 }
 
-
 int					move_forward(t_win *w)
 {
 	int	x, y;
-	
+
 	double pos_x, pos_y;
 	double add_player_x, add_player_y;
 
@@ -168,7 +167,7 @@ int					move_left(t_win *w)
 int					move_right(t_win *w)
 {
 	int	x, y;
-	
+
 	double pos_x, pos_y;
 	double add_player_x, add_player_y;
 
