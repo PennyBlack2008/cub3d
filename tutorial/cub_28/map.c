@@ -144,7 +144,7 @@ int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
 	}
 	else if (M_PI + M_PI_4 < r->ang && r->ang < M_PI_2 * 3)
 	{
-		return(is_wall(x, y, w));
+		return(is_wall(x, y - 1, w));
 	}
 	else if (M_PI_2 * 3 == r->ang)
 	{
