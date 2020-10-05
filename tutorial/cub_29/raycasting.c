@@ -9,30 +9,6 @@ double					normalize_angle(double ang)
 	return (ang);
 }
 
-void		restrain_plot(t_plot *plot, t_win *w)
-{
-	if (plot->x < 0)
-		plot->x = 0;
-	if (plot->x > w->R_width)
-		plot->x = w->R_width - 1;
-	if (plot->y < 0)
-		plot->y = 0;
-	if (plot->y > w->R_height)
-		plot->y = w->R_height - 1;
-}
-
-void		restrain_length(double *length, t_win *w)
-{
-	if (*length < 0)
-		*length = 0;
-	if (*length > w->R_width)
-		*length = w->R_width - 1;
-	if (*length < 0)
-		*length = 0;
-	if (*length > w->R_height)
-		*length = w->R_height - 1;
-}
-
 t_plot		set_plot(double x, double y)
 {
 	t_plot	plot;
@@ -70,9 +46,12 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 	double	Ya;
 	Ya = TILE_LENGTH;
 	Xa = fabs(Ya / tan(2 * M_PI - r->ang));
-	restrain_length(&Xa, w);
 
-	while (is_wall_ray(A.x, A.y, r, w) == NOT_WALL && A.x < w->R_width && A.y < w->R_height && A.x > 0 && A.y > 0)
+	printf("Xa length : %f\n", Xa);
+	printf("Ya length : %f\n", Ya);
+	printf("Ya angle : %f\n", (2 * M_PI - r->ang) * 180 / M_PI);
+
+	while (is_wall_ray(A.x, A.y, r, w) == NOT_WALL)
 	{
 		if (0 == r->ang)
 		{
@@ -82,6 +61,7 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 		{
 			A.x += Xa;
 			A.y += Ya;
+			// printf("제 1사분면\n");
 		}
 		else if (M_PI_2 == r->ang)
 		{
@@ -91,6 +71,7 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 		{
 			A.x -= Xa;
 			A.y += Ya;
+			// printf("제 2사분면\n");
 		}
 		else if (M_PI == r->ang)
 		{
@@ -100,6 +81,7 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 		{
 			A.x -= Xa;
 			A.y -= Ya;
+			// printf("제 3사분면\n");
 		}
 		else if (M_PI_2 * 3 == r->ang)
 		{
@@ -109,7 +91,19 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 		{
 			A.x += Xa;
 			A.y -= Ya;
+			// printf("제 4사분면\n");
 		}
+		if (A.x < 0)
+		{
+			A.x = 1;
+			printf("이 광선은 특별 처리: %f\n", r->ang * 180 / M_PI);
+		}
+		else if (A.x > w->R_width)
+		{
+			A.x = w->R_width - 1;
+			printf("이 광선은 특별 처리: %f\n", r->ang * 180 / M_PI);
+		}
+		printf("A(%f, %f)\n", A.x, A.y);
 	}
 	printf("결정된 점 A(%f, %f), ang: %f\n", A.x, A.y, r->ang * 180 / M_PI);
 	return (A);
@@ -138,15 +132,19 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		B.y = w->player.y + tan(r->ang) * (B.x - w->player.x);
 	else if ((M_PI_2 < r->ang && r->ang < M_PI) || (M_PI_2 * 3 < r->ang && r->ang < M_PI * 2))
 		B.y = w->player.y - tan(r->ang) * (B.x - w->player.x);
-	
+
+	printf("intercept B(%f, %f)\n", B.x, B.y);
 	double Xb;
 	double Yb;
 
 	Xb = TILE_LENGTH;
 	Yb = fabs(TILE_LENGTH * tan(2 * M_PI - r->ang));
-	restrain_length(&Yb, w);
 	
-	while(is_wall_ray(B.x, B.y, r, w) == NOT_WALL && B.x < w->R_width && B.y < w->R_height && B.x > 0 && B.y > 0)
+	printf("Xb length : %f\n", Xb);
+	printf("Yb length : %f\n", Yb);
+	printf("Yb angle : %f\n", (2 * M_PI - r->ang) * 180 / M_PI);
+	
+	while(is_wall_ray(B.x, B.y, r, w) == NOT_WALL)
 	{
 		if (0 == r->ang)
 		{
@@ -156,6 +154,7 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		{
 			B.x += Xb;
 			B.y += Yb;
+			// printf("제 1사분면\n");
 		}
 		else if (r->ang == M_PI_2)
 		{
@@ -165,6 +164,7 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		{
 			B.x -= Xb;
 			B.y += Yb;
+			// printf("제 2사분면\n");
 		}
 		else if (r->ang == M_PI)
 		{
@@ -174,6 +174,7 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		{
 			B.x -= Xb;
 			B.y -= Yb;
+			// printf("제 3사분면\n");
 		}
 		else if (r->ang == M_PI_2 * 3)
 		{
@@ -183,7 +184,19 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		{
 			B.x += Xb;
 			B.y -= Yb;
+			// printf("제 4사분면\n");
 		}
+		if (B.y < 0)
+		{
+			B.y = 1;
+			printf("이 광선은 특별 처리: %f\n", r->ang * 180 / M_PI);
+		}
+		else if (B.y > w->R_height)
+		{
+			B.y = w->R_height - 1;
+			printf("이 광선은 특별 처리: %f\n", r->ang * 180 / M_PI);
+		}
+		printf("B(%f, %f)\n", B.x, B.y);
 	}
 	printf("결정된 점 B(%f, %f), 각도: %f\n", B.x, B.y, r->ang * 180 / M_PI);
 	return (B);
@@ -197,42 +210,54 @@ void		draw_ray(t_ray *r, t_win *w)
 	double	dist_vert;
 
 	hit_horz = cast_horz_ray(r, w);
-	hit_vert = cast_vert_ray(r, w);
-	restrain_plot(&hit_horz, w);
-	restrain_plot(&hit_vert, w);
-	dist_horz = hypot((double)w->player.x - hit_horz.x, (double)w->player.y - hit_horz.y);
-	dist_vert = hypot((double)w->player.x - hit_vert.x, (double)w->player.y - hit_vert.y);
+	// hit_vert = cast_vert_ray(r, w);
+	// dist_horz = hypot((double)w->player.x - hit_horz.x, (double)w->player.y - hit_horz.y);
+	// dist_vert = hypot((double)w->player.x - hit_vert.x, (double)w->player.y - hit_vert.y);
 
-	// draw_line(w->player.x, w->player.y, (int)hit_horz.x, (int)hit_horz.y, 0xFF0000, w);
+	draw_line(w->player.x, w->player.y, (int)hit_horz.x, (int)hit_horz.y, 0xFF0000, w);
 	// draw_line(w->player.x, w->player.y, (int)hit_vert.x, (int)hit_vert.y, 0x00FF00, w);
 	// 가장 벽에 가까운 좌표로
-	if (dist_horz < dist_vert)
-	{
-		draw_line(w->player.x, w->player.y, (int)hit_horz.x, (int)hit_horz.y, 0xFF0000, w);
-	}
-	else
-	{
-		draw_line(w->player.x, w->player.y, (int)hit_vert.x, (int)hit_vert.y, 0xFF0000, w);
-	}
+	// if (dist_horz < dist_vert)
+	// {
+	// 	draw_line(w->player.x, w->player.y, (int)hit_horz.x, (int)hit_horz.y, 0xFF0000, w);
+	// }
+	// else
+	// {
+	// 	draw_line(w->player.x, w->player.y, (int)hit_vert.x, (int)hit_vert.y, 0xFF0000, w);
+	// }
 }
+
+/*
+** void		draw_rays(t_win *w)
+**
+** tan(r->ang)이 90도, 270도 일때 양의 무한대이거나 음의 무한대이다.
+** 그래서 이 r->ang 각도가 90도와 270도에 가까워 질 때 좌표값이 int 타입이 cover 할 수 있는 범위를 넘어 좌표값이 튀기 때문에 제한하려고 합니다.
+** 그래서 89도와 91도 사이, 269도와 271도 사이는 계산하지 못하도록 하겠습니다.
+*/
 
 void		draw_rays(t_win *w)
 {
-	t_ray	r[w->R_width];
+	// t_ray	r[w->R_width];
 	int		i;
 	double	ray_angle;
 
-	// 초기화
-	i = 0;
-	ray_angle = normalize_angle(w->player.ang + w->fov / 2);
-	// printf("r.ang = %f\n", r.ang * 180 / M_PI);
-	while (ray_angle > w->player.ang - w->fov / 2)
-	{
-		r[i].ang = normalize_angle(ray_angle);
-		draw_ray(&r[i], w);
-		ray_angle -= w->fov / w->R_width;
-		i++;
-		printf("카운트 i: %d\n", i);
-	}
+	t_ray	r;
+
+	r.ang = 108.48 * M_PI / 180;
+
+	draw_ray(&r, w);
+	// // 초기화
+	// i = 0;
+	// ray_angle = normalize_angle(w->player.ang + w->fov / 2);
+	// // printf("r.ang = %f\n", r.ang * 180 / M_PI);
+	// while (ray_angle > w->player.ang - w->fov / 2)
+	// {	
+	// 	r[i].ang = ray_angle;
+	// 	if (!(85 * M_PI / 180 < ray_angle && ray_angle < 95 * M_PI / 180) || (265 * M_PI / 180 < ray_angle && ray_angle < 275 * M_PI / 180))
+	// 		draw_ray(&r[i], w);
+	// 	ray_angle -= w->fov / w->R_width;
+	// 	i++;
+	// 	printf("카운트 i: %d\n", i);
+	// }
 	printf("최종 카운트 i: %d\n", i);
 }

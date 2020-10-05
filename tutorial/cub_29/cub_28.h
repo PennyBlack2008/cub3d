@@ -13,22 +13,6 @@
 #define WALL 49 // ascii #1
 #define NOT_WALL 48 // ascii #0
 
-// KEY
-# define KEY_W			13
-# define KEY_A			0
-# define KEY_S			1
-# define KEY_D			2
-
-# define KEY_LEFT		123
-# define KEY_RIGHT		124
-
-# define KEY_F			3
-# define KEY_G			5
-# define KEY_H			4
-
-# define KEY_ESC		53
-
-
 typedef struct		s_plot
 {
 	double			x;
@@ -87,12 +71,5 @@ void					draw_rectangle(t_win *w, int x, int y, int color);
 void					draw_line(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_win *w);
 void					draw_rays(t_win *w);
 int						is_wall_ray(double x, double y, t_ray *r, t_win *w);
-int						rotate_right(t_win *w);
-int						rotate_left(t_win *w);
-int						move_back(t_win *w);
-int						move_left(t_win *w);
-int						move_right(t_win *w);
-int						move_forward(t_win *w);
-double					normalize_angle(double ang);
 
 #endif

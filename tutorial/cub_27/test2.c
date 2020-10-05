@@ -51,7 +51,7 @@ int					draw_rays(t_win *w)
 	while (ang > -1 * M_PI / 6)
 	{
 		draw_ray(w, ang);
-		ang -= 0.01;
+		ang -= M_PI / 3 / 1000;
 	}
 	return (0);
 }

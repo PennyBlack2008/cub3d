@@ -119,7 +119,7 @@ t_plot		cast_horz_ray(t_ray *r, t_win *w)
 		}
 		printf("A(%f, %f)\n", A.x, A.y);
 	}
-	printf("결정된 점 A(%f, %f)\n", A.x, A.y);
+	printf("결정된 점 A(%f, %f), ang: %f\n", A.x, A.y, r->ang * 180 / M_PI);
 	return (A);
 }
 
@@ -212,7 +212,7 @@ t_plot		cast_vert_ray(t_ray *r, t_win *w)
 		}
 		printf("B(%f, %f)\n", B.x, B.y);
 	}
-	printf("결정된 점 B(%f, %f)\n", B.x, B.y);
+	printf("결정된 점 B(%f, %f), 각도: %f\n", B.x, B.y, r->ang * 180 / M_PI);
 	return (B);
 }
 

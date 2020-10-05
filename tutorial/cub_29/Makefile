@@ -5,16 +5,14 @@ MINILIB_DIR		=	./../minilibx
 SRCS			=	main.c\
 					map.c\
 					bresenhem.c\
-					raycasting.c\
-					move.c\
+					raycasting.c
 
 # OBJS			=	$(SRCS:.c=.o)
 # 위의 명령어로 돌리면 cub_17 에 get_next_line.o 가 생성되고 OBJS 명령어는 그 파일을 gnl 폴더에서 찾는다.
 OBJS			=	main.o\
 					map.o\
 					bresenhem.o\
-					raycasting.o\
-					move.o\
+					raycasting.o
 
 
 CC				=	gcc

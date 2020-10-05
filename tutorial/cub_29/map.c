@@ -85,18 +85,7 @@ void	draw_map(t_win *w)
 
 int			is_wall(double x, double y, t_win *w)
 {
-	int X;
-	int Y;
-
-	Y = (int)(y / TILE_LENGTH);
-	if (y / TILE_LENGTH > 9)
-		Y = 9;
-	
-	X = (int)(x / TILE_LENGTH);
-	if (x / TILE_LENGTH > 9)
-		X = 9;
-
-	if (w->map.map[Y][X] == WALL)
+	if (w->map.map[(int)(y / TILE_LENGTH)][(int)(x / TILE_LENGTH)] == WALL)
 		return (WALL);
 	// printf("w->map.map[%d][%d] = %d\n", (int)(y / TILE_WIDTH), (int)(x / TILE_HEIGHT), w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)]);
 	return (NOT_WALL);
@@ -110,6 +99,7 @@ int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
 		}
 		else if (0 < r->ang && r->ang < M_PI_2)
 		{
+			printf("제 1사분면\n");
 			return(is_wall(x + 1, y + 1, w));
 		}
 		else if (M_PI_2 == r->ang)
@@ -118,6 +108,7 @@ int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
 		}
 		else if (M_PI_2 < r->ang && r->ang < M_PI)
 		{
+			printf("제 2사분면\n");
 			return(is_wall(x - 1, y + 1, w));
 		}
 		else if (M_PI == r->ang)
@@ -126,6 +117,7 @@ int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
 		}
 		else if (M_PI < r->ang && r->ang < M_PI_2 * 3)
 		{
+			printf("제 3사분면\n");
 			return(is_wall(x - 1, y - 1, w));
 		}
 		else if (M_PI_2 * 3 == r->ang)
@@ -134,6 +126,7 @@ int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
 		}
 		else if (M_PI_2 * 3 < r->ang && r->ang < 2 * M_PI)
 		{
+			printf("제 4사분면\n");
 			return(is_wall(x + 1, y - 1, w));
 		}
 		
