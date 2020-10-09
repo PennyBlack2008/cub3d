@@ -46,6 +46,13 @@ typedef struct	s_pos
 	double		y;
 }				t_pos;
 
+typedef struct	s_wall
+{
+	double		length;
+	int			height;
+}				t_wall;
+
+
 typedef struct	s_ray
 {
 	double		ang;
@@ -62,6 +69,7 @@ typedef struct			s_player
 
 	// 화살표 각도(시야각)
 	double				ang;
+	double				projected_plane;
 	int					pdi;
 	int					pdj;
 
@@ -102,6 +110,7 @@ typedef struct 			s_win
 	t_img				img;
 	t_map				map;
 	t_player			player;
+	t_wall				wall;
 }						t_win;
 
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -119,7 +128,8 @@ int						move_forward(t_win *w);
 int						move_back(t_win *w);
 int						move_left(t_win *w);
 int						move_right(t_win *w);
-int						draw_ray(t_ray *r, t_win *w);
+int						draw_ray(t_win *w, t_ray *r);
 int						draw_rays(t_win *w);
+void					draw_wall(int i, t_ray *r, t_win *w);
 
 #endif

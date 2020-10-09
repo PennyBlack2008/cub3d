@@ -1,5 +1,7 @@
 광선들이 벽에 부딪히면 멈추도록 cub_26의 코드에서 if 문만 추가하여 만들었습니다.
 
+20201009 추가사항: 함수 mlx_put_image_to_window 를 draw_line 에서 제거하니 속도가 비약적으로 빨라졌습니다.
+
 밑의 사진은 코드 업데이트 전이라 결과물과 상이함
 
 ![ray_casting_basic_2](https://user-images.githubusercontent.com/59194905/94107582-c56ce480-fe78-11ea-9c51-ab056503aed7.gif)

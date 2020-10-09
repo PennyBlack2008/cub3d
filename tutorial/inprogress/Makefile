@@ -7,6 +7,7 @@ SRCS			=	cub_21.c\
 					bresenhem.c\
 					map.c\
 					move.c\
+					draw_wall.c\
 					./../get_next_line/get_next_line.c\
 					./../get_next_line/get_next_line_utils.c\
 
@@ -17,13 +18,14 @@ OBJS			=	cub_21.o\
 					bresenhem.o\
 					map.o\
 					move.o\
+					draw_wall.o\
 					get_next_line.o\
 					get_next_line_utils.o\
 
 
 CC				=	gcc
 
-CFLAG			=	-g
+CFLAG			=	-g -Wall -Werror -Wextra
 
 RM				=	rm -f
 

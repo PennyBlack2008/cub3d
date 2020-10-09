@@ -18,7 +18,7 @@ double				normalize_angle(double ang)
 **	우측 작대기 함수를 약간 변형해서 draw_rays 의 각도를 받아 WIN_WIDTH 의 길이만큼의 광선을 출력하는 함수입니다.
 */
 
-int					draw_ray(t_ray *r, t_win *w)
+int					draw_ray(t_win *w, t_ray *r)
 {
 	int x, y;
 	double pos_x, pos_y;
@@ -34,31 +34,33 @@ int					draw_ray(t_ray *r, t_win *w)
 		add_player_y = pos_y + w->player.y;
 		if (add_player_x >= 0 && add_player_y >= 0)
 		{
-			my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xFF0000);
+			// my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xFF0000);
 			if (is_wall(add_player_x, add_player_y, w) == WALL)
 				break ;
 		}
 		x++;
 	}
-	r->x = add_player_x;		r->y = add_player_y;
-	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
+	r->x = add_player_x;
+	r->y = add_player_y;
+	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
 
 int					draw_rays(t_win *w)
 {
-	t_ray			ray[w->R_width];
-	int				i;		i = 0;
-	double ang;		ang = M_PI / 6;
+	t_ray	r[w->R_width];
+	int		i;			i = 0;
+	double ray_ang;		ray_ang = M_PI / 6;
 
-	while (ang > -1 * M_PI / 6)
+	while (ray_ang > -1 * M_PI / 6)
 	{
-		ray[i].ang = ang;
-		draw_ray(&ray[i], w);
-		ang -= M_PI / 3 / 1000;
+		r[i].ang = ray_ang;
+		draw_ray(w, &(r[i]));
+		draw_wall(i, &(r[i]), w);
+		ray_ang -= M_PI / 3 / 999;
 		i++;
 	}
-	// printf("최종 i: %d\n", i);
+	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
 

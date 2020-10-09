@@ -76,7 +76,7 @@ void	draw_map(t_win *w)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
+	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 }
 
 /*

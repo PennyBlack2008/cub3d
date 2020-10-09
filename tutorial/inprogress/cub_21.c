@@ -16,8 +16,8 @@ int     render_next_frame(t_win *w)
 {
 	draw_background(w);
 	// draw_grid(w);
-	draw_map(w);
-	draw_player(w);
+	// draw_map(w);
+	// draw_player(w);
 	// draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
 	draw_rays(w);
 	return (0);
@@ -72,6 +72,10 @@ int				key_press(int keycode, t_win *w)
 	if (keycode == KEY_H)
 	{
 		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
+		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
+		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
+		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
+
 	}
 	if (keycode == KEY_G)
 	{
@@ -89,6 +93,7 @@ int					init_struct_win(t_win *w)
 	// 해상도
 	w->R_width = WIN_WIDTH;
 	w->R_height = WIN_HEIGHT;
+	w->player.projected_plane = w->R_width / 2 * atan(M_PI_2 / 3);
 
 	// 윈도우
 	w->win = mlx_new_window(w->mlx, w->R_width, w->R_height, "veryluckymanjinwoo");
@@ -106,6 +111,9 @@ int					init_struct_win(t_win *w)
 
 	// map
 	map_init(w);
+
+	// wall
+	w->wall.height = 800;
 
 	return (0);
 }

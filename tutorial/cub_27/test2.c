@@ -14,7 +14,7 @@ double				normalize_angle(double ang)
 }
 
 /*
-**	함수 draw_ray 
+**	함수 draw_ray
 **	우측 작대기 함수를 약간 변형해서 draw_rays 의 각도를 받아 WIN_WIDTH 의 길이만큼의 광선을 출력하는 함수입니다.
 */
 
@@ -40,7 +40,7 @@ int					draw_ray(t_win *w, double ang)
 		}
 		x++;
 	}
-	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
+	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
 
@@ -53,6 +53,7 @@ int					draw_rays(t_win *w)
 		draw_ray(w, ang);
 		ang -= M_PI / 3 / 1000;
 	}
+	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
 
@@ -152,7 +153,7 @@ int					draw_player(t_win *w)
 			// printf("%d %d\n", round_num_AND_int(add_player_x), round_num_AND_int(add_player_y));
 		}
 		y++;
-	}	
+	}
 
 	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 

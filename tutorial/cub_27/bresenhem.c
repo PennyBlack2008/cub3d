@@ -83,5 +83,5 @@ void draw_line(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_win *w)
 		else
 			plot_line_high(p2_x, p2_y, p1_x, p1_y, color, w);
 	}
-	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
+	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 }
