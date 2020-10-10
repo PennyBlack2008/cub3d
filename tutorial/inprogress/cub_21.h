@@ -135,8 +135,8 @@ int						move_forward(t_win *w);
 int						move_back(t_win *w);
 int						move_left(t_win *w);
 int						move_right(t_win *w);
-int						draw_ray(t_win *w, t_ray *r);
-int						draw_rays(t_win *w);
+int						cast_a_ray(t_win *w, t_ray *r);
+int						cast_rays(t_win *w);
 void					draw_wall(int i, t_ray *r, t_win *w);
 
 #endif

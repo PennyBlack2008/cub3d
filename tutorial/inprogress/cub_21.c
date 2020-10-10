@@ -16,10 +16,10 @@ int     render_next_frame(t_win *w)
 {
 	draw_background(w);
 	// draw_grid(w);
-	draw_map(w);
-	draw_player(w);
 	// draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
-	draw_rays(w);
+	cast_rays(w);
+	// draw_map(w);
+	draw_player(w);
 	return (0);
 }
 
@@ -103,8 +103,8 @@ int					init_struct_win(t_win *w)
 	w->img.x = 0;		w->img.y = 0; // 이미지의 위치
 
 	// player
-	w->player.width = 30;
-	w->player.height = 30;
+	w->player.width = 15;
+	w->player.height = 15;
 	w->player.x = WIN_WIDTH / 2;
 	w->player.y = WIN_HEIGHT / 2;
 	w->player.ang = 0 * M_PI / 180;
@@ -117,7 +117,7 @@ int					init_struct_win(t_win *w)
 	w->mini.plot.y = w->R_height - 300;
 
 	// wall
-	w->wall.height = 800;
+	w->wall.height = 600;
 
 	return (0);
 }
