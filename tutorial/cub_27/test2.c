@@ -25,7 +25,7 @@ int					draw_ray(t_win *w, double ang)
 	double add_player_x, add_player_y;
 
 	x = 0;
-	while (x < WIN_WIDTH / 2)
+	while (x < WIN_WIDTH * 2)
 	{
 		y = 0;
 		pos_x = x * cos((w->player.ang + ang) * -1) + y * sin((w->player.ang + ang) * -1);
