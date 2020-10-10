@@ -1,5 +1,5 @@
-#include "../libft/libft.h"
-#include "../minilibx/mlx.h"
+#include "../../libft/libft.h"
+#include "../../minilibx/mlx.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>

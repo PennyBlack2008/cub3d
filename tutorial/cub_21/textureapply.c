@@ -135,7 +135,7 @@ int main(void)
 	t_coord p2;
 	p2.x = 700;	p2.y = 300;
 
-	plot_line(&p1, &p2, &w);
+	// plot_line(&p1, &p2, &w);
 	mlx_put_image_to_window(w.mlx, w.win, w.img.ptr, 0, 0);
 	mlx_loop(w.mlx);
 }
