@@ -1,4 +1,4 @@
-cub_30 
+cub_30
 
 여기서 문제점은 여러가지가 있습니다.
 
@@ -7,3 +7,5 @@ cub_30
 
 두 번째) 함수 draw_ray 안에 minimap 과 draw_wall 이 함께 포함되어 있어서 minimap을 draw_wall 이 덮어버리는 현상이 있습니다. 기능을 가지고 있는 각각의 함수를 바깥으로 빼고 t_ray 도 t_win 에 포함시켜서 w 만 있어도 광범위하게 잘 이용할 수 있도록 만들면 더 좋을 것같습니다.
 --> draw_minimap 이라는 함수를 추가하고 draw_map, draw_line을 draw_ray 로 부터 분리하여 함수 draw_minimap 에 넣었음.
+
+![20201009](https://user-images.githubusercontent.com/59194905/95649917-3966e800-0b1b-11eb-86bd-57facd6d0175.gif)
