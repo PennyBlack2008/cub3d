@@ -34,7 +34,7 @@ int					draw_ray(t_win *w, t_ray *r)
 		add_player_y = pos_y + w->player.y;
 		if (add_player_x >= 0 && add_player_y >= 0)
 		{
-			// my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xFF0000);
+			my_mlx_pixel_put(&w->img, add_player_x / 4 + w->mini.plot.x, add_player_y / 4 + w->mini.plot.y, 0xFF0000);
 			if (is_wall(add_player_x, add_player_y, w) == WALL)
 				break ;
 		}
@@ -121,7 +121,7 @@ int					draw_player(t_win *w)
 			add_player_y = pos_y + w->player.y;
 			if (add_player_x >= 0 && add_player_y >= 0)
 			{
-				my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xbbccff);
+				my_mlx_pixel_put(&w->img, add_player_x / 4 + w->mini.plot.x, add_player_y / 4 + w->mini.plot.x, 0xbbccff);
 				// printf("%d %d\n", round_num_AND_int(add_player_x), round_num_AND_int(add_player_y));
 			}
 			y++;

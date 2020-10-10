@@ -40,11 +40,11 @@
 ** Angle between subsequent rays = 60/320 degrees
 */
 
-typedef struct	s_pos
+typedef struct	s_plot
 {
 	double		x;
 	double		y;
-}				t_pos;
+}				t_plot;
 
 typedef struct	s_wall
 {
@@ -59,6 +59,12 @@ typedef struct	s_ray
 	double		x;
 	double		y;
 }				t_ray;
+
+typedef struct	s_minimap
+{
+	t_plot		plot;
+}				t_minimap;
+
 
 typedef struct			s_player
 {
@@ -111,6 +117,7 @@ typedef struct 			s_win
 	t_map				map;
 	t_player			player;
 	t_wall				wall;
+	t_minimap			mini;
 }						t_win;
 
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
