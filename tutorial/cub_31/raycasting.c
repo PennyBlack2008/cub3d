@@ -51,16 +51,16 @@ int					cast_rays(t_win *w)
 {
 	t_ray	r[w->R_width];
 	int		i;			i = 0;
-	double ray_ang;		ray_ang = M_PI / 6;
+	double ray_ang;		ray_ang = -1 * M_PI / 6;
 
-	while (ray_ang > -1 * M_PI / 6)
+	while (ray_ang < M_PI / 6)
 	{
 		r[i].ang = ray_ang;
 		cast_a_ray(w, &(r[i])); // t_ray에 정보 심어주고
 		draw_wall(i, &(r[i]), w); // 3D 그려주고
 		draw_ceiling(i, &(r[i]), w);
 		draw_floor(i, &(r[i]), w);
-		ray_ang -= M_PI / 3 / 999;
+		ray_ang += M_PI / 3 / 999;
 		i++;
 	}
 	draw_minimap(r, w);
