@@ -138,5 +138,6 @@ int						move_right(t_win *w);
 int						cast_a_ray(t_win *w, t_ray *r);
 int						cast_rays(t_win *w);
 void					draw_wall(int i, t_ray *r, t_win *w);
+void					draw_minimap(t_ray *r, t_win *w);
 
 #endif

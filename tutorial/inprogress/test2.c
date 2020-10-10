@@ -46,6 +46,19 @@ int					cast_a_ray(t_win *w, t_ray *r)
 	return (0);
 }
 
+void				draw_minimap(t_ray *r, t_win *w)
+{
+	int	i;
+	// 미니맵 그리기
+	draw_map(w);
+	i = 0;
+	while (i < w->R_width)
+	{
+		draw_line((w->player.x / 4) + w->mini.plot.x, (w->player.y / 4) + w->mini.plot.y, (r[i].x / 4) + w->mini.plot.x, (r[i].y / 4) + w->mini.plot.y, 0xFF0000, w);
+		i++;
+	}
+}
+
 int					cast_rays(t_win *w)
 {
 	t_ray	r[w->R_width];
@@ -61,15 +74,15 @@ int					cast_rays(t_win *w)
 		i++;
 	}
 	
-	// 미니맵 그리기
-	draw_map(w);
-	i = 0;
-	while (i < w->R_width)
-	{
-		draw_line((w->player.x / 4) + w->mini.plot.x, (w->player.y / 4) + w->mini.plot.y, (r[i].x / 4) + w->mini.plot.x, (r[i].y / 4) + w->mini.plot.y, 0xFF0000, w);
-		i++;
-	}
-
+	// // 미니맵 그리기
+	// draw_map(w);
+	// i = 0;
+	// while (i < w->R_width)
+	// {
+	// 	draw_line((w->player.x / 4) + w->mini.plot.x, (w->player.y / 4) + w->mini.plot.y, (r[i].x / 4) + w->mini.plot.x, (r[i].y / 4) + w->mini.plot.y, 0xFF0000, w);
+	// 	i++;
+	// }
+	draw_minimap(r, w);
 	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
