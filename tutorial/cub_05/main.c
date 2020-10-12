@@ -33,18 +33,18 @@ int main()
 		img.data = (int *)mlx_get_data_addr(img.ptr, &img.bpp, &img.size_l, &img.endian); // img.ptr 을 통해 width 와 height 는 이미 알고 있다.
 		// img.ptr 을 통해서 width 와 height 값에 접근할 수 있어 img.data 에 1차원 배열로 픽셀을 받을 수 있는 것으로 생각한다.
 		// 접근 경로는 img.ptr 을 통해 그 t_img 에 접근할 수 있고 그 구조체의 멤버에 저장된 img.width, img.height 을 통해 넓이와 높이의 값을 얻을 수 있다.
-		count_h = -1;
-		while (++count_h < img.height)
-		{
-			count_w = -1;
-			while (++count_w < img.width / 2)
-			{
-				if (count_w % 2)
-					img.data[count_h * img.width + count_w] = 0xFFFFFF;
-				else
-					img.data[count_h * img.width + count_w] = 0xFF0000;
-			}
-		}
+		// count_h = -1;
+		// while (++count_h < img.height)
+		// {
+		// 	count_w = -1;
+		// 	while (++count_w < img.width / 2)
+		// 	{
+		// 		if (count_w % 2)
+		// 			img.data[count_h * img.width + count_w] = 0xFFFFFF;
+		// 		else
+		// 			img.data[count_h * img.width + count_w] = 0xFF0000;
+		// 	}
+		// }
 		mlx_put_image_to_window(mlx, win, img.ptr, 50, 50);
 		mlx_loop(mlx);
 		return (0);
