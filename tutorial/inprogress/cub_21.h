@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 // WIN SPEC
 # define WIN_WIDTH 1000

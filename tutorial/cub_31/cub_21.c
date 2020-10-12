@@ -100,7 +100,6 @@ int					init_struct_win(t_win *w)
 
 	// 이미지 size: 30 X 30
 	w->img.ptr = mlx_new_image(w->mlx, WIN_WIDTH, WIN_HEIGHT);		w->img.addr = mlx_get_data_addr(w->img.ptr, &w->img.bits_per_pixel, &w->img.line_length, &w->img.endian);
-	w->img.x = 0;		w->img.y = 0; // 이미지의 위치
 
 	// player
 	w->player.width = 15;

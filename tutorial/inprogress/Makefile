@@ -3,15 +3,15 @@ NAME			=	result
 LIBFT_DIR		=	./../libft
 MINILIB_DIR		=	./../minilibx
 
-SRCS			=	bresenhem.c\
+SRCS			=	main.c\
 					./../get_next_line/get_next_line.c\
-					./../get_next_line/get_next_line_utils.c
+					./../get_next_line/get_next_line_utils.c\
 
 # OBJS			=	$(SRCS:.c=.o)
 # 위의 명령어로 돌리면 cub_17 에 get_next_line.o 가 생성되고 OBJS 명령어는 그 파일을 gnl 폴더에서 찾는다.
-OBJS			=	bresenhem.o\
+OBJS			=	main.o\
 					get_next_line.o\
-					get_next_line_utils.o
+					get_next_line_utils.o\
 
 
 CC				=	gcc
