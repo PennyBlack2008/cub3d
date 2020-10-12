@@ -39,10 +39,7 @@ typedef struct		s_win
 
 void					my_mlx_pixel_put(t_tex *img, int x, int y, int color)
 {
-	int					*dst;
-
-	dst = img->addr + (y * img->len + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
+	img->addr[y * img->x + x] = color;
 }
 
 int					main()
@@ -65,12 +62,15 @@ int					main()
 	win.tex.ptr = mlx_new_image(win.mlx, win.img.width * 2, win.img.height);
 	win.tex.addr = (int *)mlx_get_data_addr(win.tex.ptr, &win.tex.bpp, &win.tex.x, &win.tex.y);
 
-	i = 0;		k = -1;
+	i = 0;	k = -1;
 	while (i < win.img.height) // i 가 height
 	{
 		j = 0;
+		// k = j * 2;
 		while (j < win.img.width) // j 가 width
 		{
+			// my_mlx_pixel_put(&win.tex, k, i, win.img.addr[i * win.img.width + j]);
+			// my_mlx_pixel_put(&win.tex, k + 1, i, win.img.addr[i * win.img.width + j]);
 			win.tex.addr[++k] = win.img.addr[i * win.img.width + j];
 			win.tex.addr[++k] = win.img.addr[i * win.img.width + j];
 			j++;

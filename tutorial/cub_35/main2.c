@@ -66,16 +66,14 @@ int					main()
 	win.tex.addr = (int *)mlx_get_data_addr(win.tex.ptr, &win.tex.bpp, &win.tex.x, &win.tex.y);
 
 	i = 0;
-	while (i < win.img.height) // i 가 height
+	while (i < win.img.width) // i 가 height
 	{
-		k = i * 2;
-		j = 0;
-		while (j < win.img.width) // j 가 width
+		j = 0;		k = 0;
+		while (j < win.img.height)
 		{
-			win.tex.addr[k * win.img.width + j] = win.img.addr[i * win.img.width + j];
-			win.tex.addr[(k + 1) * win.img.width + j] = win.img.addr[i * win.img.width + j];
-			// my_mlx_pixel_put(&win.tex, j, k, win.img.addr[i * win.img.width + j]);
-			// my_mlx_pixel_put(&win.tex, j, k + 1, win.img.addr[i * win.img.width + j]);
+			k = j * 2;
+			win.tex.addr[k * win.img.width + i] = win.img.addr[j * win.img.width + i];
+			win.tex.addr[(k + 1) * win.img.width + i] = win.img.addr[j * win.img.width + i];
 			j++;
 		}
 		i++;
