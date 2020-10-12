@@ -62,18 +62,18 @@ int					main()
 	win.img.addr = (int *)mlx_get_data_addr(win.img.ptr, &win.img.bpp, &win.img.len, &win.img.endian);//int* 로 해야 xpm 제대로 받아오는 듯... char *는 문자 표현 크기가 작아서..
 
 	// 두 번째 이미지(가공할 것)
-	win.tex.ptr = mlx_new_image(win.mlx, win.img.width, win.img.height * 2);
+	win.tex.ptr = mlx_new_image(win.mlx, win.img.width * 2, win.img.height);
 	win.tex.addr = (int *)mlx_get_data_addr(win.tex.ptr, &win.tex.bpp, &win.tex.x, &win.tex.y);
 
 	i = 0;
 	while (i < win.img.width) // i 가 height
 	{
-		j = 0;		k = 0;
+		j = 0;
+		k = i * 2;
 		while (j < win.img.height)
 		{
-			k = j * 2;
-			win.tex.addr[k * win.img.width + i] = win.img.addr[j * win.img.width + i];
-			win.tex.addr[(k + 1) * win.img.width + i] = win.img.addr[j * win.img.width + i];
+			win.tex.addr[j * win.tex.x + k] = win.img.addr[j * win.img.width + i];
+			win.tex.addr[j * win.tex.x + k + 1] = win.img.addr[j * win.img.width + i];
 			j++;
 		}
 		i++;
