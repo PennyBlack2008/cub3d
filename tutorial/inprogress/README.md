@@ -1,10 +1,7 @@
-cub_32
+cub_31
 
-여기서는 이제 벽에 스킨을 입힐 것입니다.
+개선할 점
+1. 천장 그려야함 -> 그렸음(in draw_wall.c)
+2. 바닥 그려야함 -> 그렸음(in draw_wall.c)
 
-벽에 스킨을 입히려면 필요한 것들이 있습니다.
-
-1. xpm 파일 -> cub_05 수정하기
-2. xpm 파일을 읽어올 gnl 함수 -> cub_20 수정하기
-
-예전에 map을 받아오는 함수를 작성했던 것처럼 그 방법 대로 xpm 파일도 받아오기
+![20201010cub3d](https://user-images.githubusercontent.com/59194905/95649855-c3fb1780-0b1a-11eb-8096-0eb4686a568a.gif)

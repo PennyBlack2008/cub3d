@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <fcntl.h>
 
 // WIN SPEC
 # define WIN_WIDTH 1000
@@ -53,8 +52,8 @@ typedef struct	s_plot
 
 typedef struct	s_wall
 {
-	double		length; // 가로, 세로 같도록 똑같은 변수 사용!
-	int			height;
+	int			length; // 가로, 세로 같도록 똑같은 변수 사용!
+	int			height; // 이건 3d 에서의 높이
 }				t_wall;
 
 
@@ -66,6 +65,7 @@ typedef struct	s_ray
 
 	int		floor;
 	int		ceiling;
+	int		wall_NSEW; // 0: north, 1: south, 2: east, 3: west
 }				t_ray;
 
 typedef struct	s_minimap
@@ -94,6 +94,19 @@ typedef struct			s_player
 	char*				str_KEY_D; // 파란색 끝에 적어줄 글자
 }						t_player;
 
+typedef struct		s_tex
+{
+	void			*ptr;
+	int				*addr;
+	int				bpp;
+	int				len;
+	int				endian;
+
+	// xpm image size
+	int				width;
+	int				height;
+}					t_tex;
+
 typedef struct  s_img
 {
     void        *ptr;
@@ -113,6 +126,7 @@ typedef struct	s_map
 	char		**map;
 	int			i;
 	int			j;
+	int			*curr_tex;
 }				t_map;
 
 
@@ -127,6 +141,7 @@ typedef struct 			s_win
 	t_player			player;
 	t_wall				wall;
 	t_minimap			mini;
+	t_tex				tex;
 }						t_win;
 
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -149,5 +164,6 @@ void					draw_wall(int i, t_ray *r, t_win *w);
 void					draw_minimap(t_ray *r, t_win *w);
 void					draw_ceiling(int i, t_ray *r, t_win *w);
 void					draw_floor(int i, t_ray *r, t_win *w);
+int						is_wall_ray(double x, double y, t_ray *r, t_win *w);
 
 #endif

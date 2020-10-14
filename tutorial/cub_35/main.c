@@ -97,14 +97,14 @@ int					main()
 	scale_w = 2;
 	scale_h = 4;
 	i = 0;
-	while (i < 64 * scale_h) // height
+	while (i < 64 * scale_w) // width
 	{
 		j = 0;
-		while (j < 64 * scale_w) // width
+		while (j < 64 * scale_h) // height
 		{
-			px = floor(i / scale_h);
-			py = floor(j / scale_w);
-			my_mlx_pixel_put(&win.img, j, i, win.curr_tex[(int)(64 * px + py)]);
+			px = floor(i / scale_w);
+			py = floor(j / scale_h);
+			my_mlx_pixel_put(&win.img, i, j, win.curr_tex[(int)(64 * py + px)]);
 			j++;
 		}
 		i++;
