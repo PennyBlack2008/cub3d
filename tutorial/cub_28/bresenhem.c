@@ -36,7 +36,7 @@ static void plot_line_low(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_w
 		D += 2 * dy;
 		p_x++;
 	}
-	mlx_put_image_to_window(w->mlx, w->ptr, w->img.ptr, 0, 0);
+	// mlx_put_image_to_window(w->mlx, w->ptr, w->img.ptr, 0, 0);
 }
 
 static void plot_line_high(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_win *w)
@@ -73,7 +73,7 @@ static void plot_line_high(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_
 		D += 2 * dx;
 		p_y++;
 	}
-	mlx_put_image_to_window(w->mlx, w->ptr, w->img.ptr, 0, 0);
+	// mlx_put_image_to_window(w->mlx, w->ptr, w->img.ptr, 0, 0);
 }
 
 void draw_line(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_win *w)

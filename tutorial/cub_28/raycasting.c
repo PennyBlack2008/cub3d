@@ -234,5 +234,6 @@ void		draw_rays(t_win *w)
 		i++;
 		printf("카운트 i: %d\n", i);
 	}
+	mlx_put_image_to_window(w->mlx, w->ptr, w->img.ptr, 0, 0);
 	printf("최종 카운트 i: %d\n", i);
 }

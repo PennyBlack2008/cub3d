@@ -18,26 +18,33 @@
 double				get_which_wall(t_ray *r, t_win *w)
 {
 	double			x;
+	double			ray_ang;
 
-	if (r->ang > M_PI_4 * 7 || r->ang < M_PI_4)
+	ray_ang = normalize_angle(w->player.ang + r->ang);
+	if (ray_ang > M_PI_4 * 7 || ray_ang < M_PI_4)
 	{
 		r->wall_NSEW = EAST;
 		x = r->wall.y - r->y;
+		// printf("ray_ang: %f\n", ray_ang * 180 / M_PI);
+		// printf("EAST: %f\n", x);
 	}
-	else if (r->ang > M_PI_4 && r->ang < M_PI_4 * 3)
+	else if (ray_ang > M_PI_4 && ray_ang < M_PI_4 * 3)
 	{
 		r->wall_NSEW = SOUTH;
 		x = r->x - r->wall.x;
+		// printf("South: %f\n", x);
 	}
-	else if (r->ang > M_PI_4 * 3 && r->ang < M_PI_4 * 5)
+	else if (ray_ang > M_PI_4 * 3 && ray_ang < M_PI_4 * 5)
 	{
 		r->wall_NSEW = WEST;
 		x = r->wall.y - r->y;
+		// printf("West: %f\n", x);
 	}
-	else if (r->ang > M_PI_4 * 5 && r->ang < M_PI_4 * 7)
+	else if (ray_ang > M_PI_4 * 5 && ray_ang < M_PI_4 * 7)
 	{
 		r->wall_NSEW = NORTH;
 		x = r->x - r->wall.x;
+		// printf("North: %f\n", x);
 	}
 	return (x);
 }
@@ -64,9 +71,9 @@ void		draw_wall(int i, t_ray *r, t_win *w)
 
 	dist_to_wall = hypot(r->x - w->player.x, r->y - w->player.y) * cos(r->ang);
 	pjtd_height = w->wall.height * w->player.projected_plane / dist_to_wall;
+	scale = pjtd_height / 64;
 	if (pjtd_height > w->R_height)
 		pjtd_height = w->R_height;
-	scale = pjtd_height / 64;
 	int j;		j = 0;		int k;		k = (w->R_height - pjtd_height) / 2;
 
 	r->ceiling = k;
