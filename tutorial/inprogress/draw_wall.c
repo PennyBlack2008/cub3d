@@ -5,7 +5,7 @@
 ** https://permadi.com/1996/05/ray-casting-tutorial-9/
 **
 ** projected wall height / distance of player to projected plane = actual wall height / distance of player to the wall
-** 
+**
 ** projected wall height = actual wall height * distance of player to projected plane / distance of player to the wall
 ** 1. actual wall height 는 cub_21.c 의 w->wall.height = 800; 에서 정의됨
 ** 2. distance of player to projected plane 은 cub_21.c 에서 화면의 해상도 크기 / 2 * atan(fov) 로 정의됨. w->player.projected_plane = w->R_width / 2 * atan(M_PI_2 / 3);
@@ -56,7 +56,7 @@ int					get_color_tex(double y, double scale, t_ray *r, t_win *w)
 	double			px, py;
 
 	x = get_which_wall(r, w); // 여기서 x 에 넣어줄 값을 정한다.
-	px = floor(x / scale);
+	px = floor(x / (100 / 64)); // x 에서 받는 scale 은 100 -> 64이다.
 	py = floor(y / scale);
 	color = w->map.curr_tex[(int)(64 * py + px)];
 	return (color);
@@ -77,7 +77,7 @@ void		draw_wall(int i, t_ray *r, t_win *w)
 	int j;		j = 0;		int k;		k = (w->R_height - pjtd_height) / 2;
 
 	r->ceiling = k;
-	
+
 	// 중간인 500 은 j while 에서 처리
 	while (j < pjtd_height) // 벽을 아래로 내리기
 	{
