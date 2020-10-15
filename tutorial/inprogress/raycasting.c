@@ -36,13 +36,15 @@ int					cast_a_ray(t_win *w, t_ray *r)
 		if (add_player_x >= 0 && add_player_y >= 0)
 		{
 			// my_mlx_pixel_put(&w->img, add_player_x / 4 + w->mini.plot.x, add_player_y / 4 + w->mini.plot.y, 0xFF0000);
-			if (is_wall_ray(add_player_x, add_player_y, r, w) == WALL)
+			if (is_wall(add_player_x, add_player_y, w) == WALL)
 				break ;
 		}
 		x++;
 	}
 	r->x = add_player_x;
 	r->y = add_player_y;
+	r->wall.x = (int)r->x / w->wall.length;
+	r->wall.y = (int)r->y / w->wall.length;
 	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
@@ -55,7 +57,7 @@ int					cast_rays(t_win *w)
 
 	while (ray_ang < M_PI / 6)
 	{
-		r[i].ang = ray_ang;
+		r[i].ang = normalize_angle(ray_ang);
 		cast_a_ray(w, &(r[i])); // t_ray에 정보 심어주고
 		draw_wall(i, &(r[i]), w); // 3D 그려주고
 		draw_ceiling(i, &(r[i]), w);

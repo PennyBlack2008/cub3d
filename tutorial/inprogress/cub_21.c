@@ -119,27 +119,6 @@ int					init_struct_win(t_win *w)
 	w->wall.length = 100;
 	w->wall.height = 600;
 
-	// texture
-	w->tex.ptr = mlx_xpm_file_to_image(w->mlx, "eagle.xpm", &w->tex.width, &w->tex.height);
-	w->tex.addr = (int *)mlx_get_data_addr(w->tex.ptr, &w->tex.bpp, &w->tex.len, &w->tex.endian);
-
-	// w->map.curr_tex
-	int i, j;
-
-	w->map.curr_tex = (int *)ft_calloc((w->tex.height * w->tex.width), sizeof(int));
-	i = 0;
-	while (i < w->tex.height)
-	{
-		j = 0;
-		while (j < w->tex.width)
-		{
-			w->map.curr_tex[(int)w->tex.width * i + j] = w->tex.addr[(int)w->tex.width * i + j];
-			j++;
-		}
-		i++;
-	}
-	mlx_destroy_image(w->mlx, w->tex.ptr);
-
 	return (0);
 }
 

@@ -57,17 +57,6 @@ int					round_num(double num)
 	return (num);
 }
 
-int					get_color_tex(double x, double y, double scale, t_win *w)
-{
-	int				color;
-	double			px, py;
-
-	px = floor(x / scale);
-	py = floor(y / scale);
-	color = w->curr_tex[(int)(64 * py + px)];
-	return (color);
-}
-
 int					main()
 {
 	t_win			win;
@@ -75,8 +64,8 @@ int					main()
 	int				w;
 	int				i, j, k;
 	double			px, py;
-	double			scale;
-	int				color;
+	double			scale_w;
+	double			scale_h;
 
 	// window 설정
 	win.mlx = mlx_init();
@@ -105,15 +94,17 @@ int					main()
 	mlx_destroy_image(win.mlx, win.tex.ptr);
 
 	// 두 번째 이미지를 윈도우에 출력해보기
-	scale = 2;
+	scale_w = 2;
+	scale_h = 4;
 	i = 0;
-	while (i < 64 * scale) // width
+	while (i < 64 * scale_w) // width
 	{
 		j = 0;
-		while (j < 64 * scale) // height
+		while (j < 64 * scale_h) // height
 		{
-			color = get_color_tex(i, j, scale, &win);
-			my_mlx_pixel_put(&win.img, i, j, color);
+			px = floor(i / scale_w);
+			py = floor(j / scale_h);
+			my_mlx_pixel_put(&win.img, i, j, win.curr_tex[(int)(64 * py + px)]);
 			j++;
 		}
 		i++;

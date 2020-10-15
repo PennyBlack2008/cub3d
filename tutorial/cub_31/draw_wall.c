@@ -32,11 +32,13 @@ void		draw_wall(int i, t_ray *r, t_win *w)
 
 	r->ceiling = 500 - k;
 	// 중간인 500 은 위쪽 while 에서 처리
+	// 중간에서 아래쪽 벽
 	while (j < pjtd_height / 2)
 	{
 		my_mlx_pixel_put(&w->img, i, 500 + j, 0x00ff00);
 		j++;
 	}
+	// 중간에서 위쪽 벽
 	while (k > 0)
 	{
 		my_mlx_pixel_put(&w->img, i, 500 - k, 0x00ff00);
