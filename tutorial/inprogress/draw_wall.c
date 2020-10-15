@@ -48,7 +48,7 @@ int					get_color_tex(double x, double y, double scale, t_ray *r, t_win *w)
 	x = get_which_wall(r, w); // 여기서 x 에 넣어줄 값을 정한다.
 	px = floor(x / scale);
 	py = floor(y / scale);
-	color = w->curr_tex[(int)(64 * py + px)];
+	color = w->map.curr_tex[(int)(64 * py + px)];
 	return (color);
 }
 

@@ -115,11 +115,25 @@ typedef struct  s_img
 
 }               t_img;
 
+typedef struct		s_tex
+{
+	void			*ptr;
+	int				*addr;
+	int				bpp;
+	int				len;
+	int				endian;
+
+	// xpm image size
+	int				width;
+	int				height;
+}					t_tex;
+
 typedef struct	s_map
 {
 	char		**map;
 	int			i;
 	int			j;
+	int			*curr_tex;
 }				t_map;
 
 
@@ -133,6 +147,7 @@ typedef struct 			s_win
 	t_map				map;
 	t_player			player;
 	t_wall				wall;
+	t_tex				tex;
 	t_minimap			mini;
 }						t_win;
 
@@ -157,5 +172,7 @@ void					draw_minimap(t_ray *r, t_win *w);
 void					draw_ceiling(int i, t_ray *r, t_win *w);
 void					draw_floor(int i, t_ray *r, t_win *w);
 double					normalize_angle(double ang);
+int						get_color_tex(double x, double y, double scale, t_ray *r, t_win *w);
+double					get_which_wall(t_ray *r, t_win *w);
 
 #endif
