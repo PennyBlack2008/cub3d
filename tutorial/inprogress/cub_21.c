@@ -121,7 +121,7 @@ int					init_struct_win(t_win *w)
 
 	// texture
 	int i, j;
-	w->tex.ptr = mlx_xpm_file_to_image(w->mlx, "eagle.xpm", &w->tex.width, &w->tex.height);
+	w->tex.ptr = mlx_xpm_file_to_image(w->mlx, "wall_1.xpm", &w->tex.width, &w->tex.height);
 	w->tex.addr = (int *)mlx_get_data_addr(w->tex.ptr, &w->tex.bpp, &w->tex.len, &w->tex.endian);
 	w->map.curr_tex = (int *)ft_calloc((w->tex.height * w->tex.width), sizeof(int));
 	i = 0;
