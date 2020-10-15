@@ -14,6 +14,7 @@
 **
 */
 
+// is_wall 의 경계가 모호하여 이 곳을 먼저 봐야할 것 같다.
 double				get_which_wall(t_ray *r, t_win *w)
 {
 	double			x;
@@ -40,9 +41,11 @@ double				get_which_wall(t_ray *r, t_win *w)
 	}
 	return (x);
 }
-int					get_color_tex(double x, double y, double scale, t_ray *r, t_win *w)
+
+int					get_color_tex(double y, double scale, t_ray *r, t_win *w)
 {
 	int				color;
+	double				x;
 	double			px, py;
 
 	x = get_which_wall(r, w); // 여기서 x 에 넣어줄 값을 정한다.
@@ -64,25 +67,19 @@ void		draw_wall(int i, t_ray *r, t_win *w)
 	if (pjtd_height > w->R_height)
 		pjtd_height = w->R_height;
 	scale = pjtd_height / 64;
-	int j;		j = 0;		int k;		k = pjtd_height / 2 - 1;
+	int j;		j = 0;		int k;		k = (w->R_height - pjtd_height) / 2;
 
-	r->ceiling = 500 - k;
+	r->ceiling = k;
 	
 	// 중간인 500 은 j while 에서 처리
-	while (j < pjtd_height / 2) // 벽을 아래로 내리기
+	while (j < pjtd_height) // 벽을 아래로 내리기
 	{
 		// j 는 어떻게 처리할 것인가? pjtd_height 를 조절하면서 구해야한다.
-		color = get_color_tex(i, j + (pjtd_height / 2), scale, r, w);
-		my_mlx_pixel_put(&w->img, i, 500 + j, color);
+		color = get_color_tex(j, scale, r, w);
+		my_mlx_pixel_put(&w->img, i, k + j - 1, color);
 		j++;
 	}
-	while (k > 0) // 벽을 위로 올리기
-	{
-		color = get_color_tex(i, k, scale, r, w);
-		my_mlx_pixel_put(&w->img, i, 500 - k, color);
-		k--;
-	}
-	r->floor = 500 + j;
+	r->floor = pjtd_height + k;
 }
 
 void		draw_ceiling(int i, t_ray *r, t_win *w)

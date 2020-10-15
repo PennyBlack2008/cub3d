@@ -58,7 +58,7 @@ typedef struct	s_plot
 
 typedef struct	s_wall
 {
-	double		length; // 가로, 세로 같도록 똑같은 변수 사용!
+	int			length; // 가로, 세로 같도록 똑같은 변수 사용!
 	int			height;
 }				t_wall;
 
@@ -66,8 +66,8 @@ typedef struct	s_wall
 typedef struct	s_ray
 {
 	double		ang;
-	double		x;
-	double		y;
+	int			x;
+	int			y;
 
 	int		floor;
 	int		ceiling;
@@ -172,7 +172,7 @@ void					draw_minimap(t_ray *r, t_win *w);
 void					draw_ceiling(int i, t_ray *r, t_win *w);
 void					draw_floor(int i, t_ray *r, t_win *w);
 double					normalize_angle(double ang);
-int						get_color_tex(double x, double y, double scale, t_ray *r, t_win *w);
+int						get_color_tex(double y, double scale, t_ray *r, t_win *w);
 double					get_which_wall(t_ray *r, t_win *w);
 
 #endif

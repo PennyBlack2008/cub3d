@@ -41,10 +41,10 @@ int					cast_a_ray(t_win *w, t_ray *r)
 		}
 		x++;
 	}
-	r->x = add_player_x;
-	r->y = add_player_y;
-	r->wall.x = (int)r->x / w->wall.length;
-	r->wall.y = (int)r->y / w->wall.length;
+	r->x = (int)add_player_x;
+	r->y = (int)add_player_y;
+	r->wall.x = (int)(x / w->wall.length) * w->wall.length;
+	r->wall.y = (int)(y / w->wall.length) * w->wall.length;
 	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
