@@ -32,7 +32,11 @@ double				get_which_wall(t_ray *r, t_win *w)
 	{
 		r->wall_NSEW = SOUTH;
 		x = r->x - r->wall.x;
-		// printf("South: %f\n", x);
+		if (x < 0)
+		{
+			printf("South: %f r->x : %d r->wall.x: %f\n", x, r->x, r->wall.x); // -로 튕기는 경우가 있다.
+			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
+		}
 	}
 	else if (ray_ang > M_PI_4 * 3 && ray_ang < M_PI_4 * 5)
 	{
