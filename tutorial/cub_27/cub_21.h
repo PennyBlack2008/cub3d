@@ -46,6 +46,13 @@ typedef struct	s_pos
 	double		y;
 }				t_pos;
 
+typedef struct			s_wall
+{
+	int					length;
+	int					height;
+}						t_wall;
+
+
 typedef struct			s_player
 {
 	// player figure
@@ -95,6 +102,7 @@ typedef struct 			s_win
 	t_img				img;
 	t_map				map;
 	t_player			player;
+	t_wall				wall;
 }						t_win;
 
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);

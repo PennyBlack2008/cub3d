@@ -3,8 +3,6 @@
 #define COLS 10
 #define WALL 49 // ascii #1
 #define NOT_WALL 48 // ascii #0
-#define TILE_HEIGHT	100 //WIN_HEIGHT / ROWS
-#define TILE_WIDTH 100 //WIN_WIDTH / COLS
 
 void	map_init(t_win *w)
 {
@@ -37,15 +35,15 @@ void	draw_rectangle(t_win *w, int x, int y, int color)
 	int i, j;
 
 	// x, y 는 각각 원점에서 대각선 위치에 있는 점의 x, y 좌표가 된다. x는 사각형의 너비, y는 사각형의 높이
-	x *= WIN_HEIGHT / ROWS; // ROWS: 4
-	y *= WIN_WIDTH / COLS; // COLS: 10
+	x *= w->wall.length; // ROWS: 4
+	y *= w->wall.length; // COLS: 10
 	// printf("x :%d, y: %d \n", x, y);
 	// 초기값 x
 	i = 0;
-	while (i < WIN_WIDTH / COLS)
+	while (i < w->wall.length)
 	{
 		j = 0;
-		while (j < WIN_WIDTH / ROWS)
+		while (j < w->wall.length)
 		{
 			my_mlx_pixel_put(&w->img, y + i, x + j, color);
 			j++;
@@ -82,14 +80,14 @@ void	draw_map(t_win *w)
 /*
 ** int						is_wall(int x, int y, t_win *w)
 ** 확인하고자 하는 픽셀의 좌표를 넣으면 그 픽셀이 벽인지 확인 해주는 함수, 1이면 벽, 0이면 벽이 아니다.
-** 픽셀 좌표 x, y 에 각각 TILE_WIDTH, TILE_HEIGHT 를 나누어 이것이 char **map에 어떤 인덱스에
-** 속하는 지 알아보고 map[x * TILE_WIDTH][y * TILE_HEIGHT]가 0이면 벽이아니고 1이면 벽으로 결정
+** 픽셀 좌표 x, y 에 각각 w->wall.length, w->wall.length 를 나누어 이것이 char **map에 어떤 인덱스에
+** 속하는 지 알아보고 map[x * w->wall.length][y * w->wall.length]가 0이면 벽이아니고 1이면 벽으로 결정
 */
 
 int			is_wall(double x, double y, t_win *w)
 {
-	if (w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)] == WALL)
+	if (w->map.map[(int)(y / w->wall.length)][(int)(x / w->wall.length)] == WALL)
 		return (WALL);
-	// printf("w->map.map[%d][%d] = %d\n", (int)(y / TILE_WIDTH), (int)(x / TILE_HEIGHT), w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)]);
+	// printf("w->map.map[%d][%d] = %d\n", (int)(y / w->wall.length), (int)(x / w->wall.length), w->map.map[(int)(y / w->wall.length)][(int)(x / w->wall.length)]);
 	return (NOT_WALL);
 }

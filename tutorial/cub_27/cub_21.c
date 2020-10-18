@@ -94,6 +94,9 @@ int					init_struct_win(t_win *w)
 	w->R_width = WIN_WIDTH;
 	w->R_height = WIN_HEIGHT;
 
+	// 벽
+	w->wall.length = 100;
+
 	// 윈도우
 	w->win = mlx_new_window(w->mlx, w->R_width, w->R_height, "veryluckymanjinwoo");
 
@@ -101,16 +104,17 @@ int					init_struct_win(t_win *w)
 	w->img.ptr = mlx_new_image(w->mlx, WIN_WIDTH, WIN_HEIGHT);		w->img.addr = mlx_get_data_addr(w->img.ptr, &w->img.bits_per_pixel, &w->img.line_length, &w->img.endian);
 	w->img.x = 0;		w->img.y = 0; // 이미지의 위치
 
-	// player
-	w->player.width = 30;
-	w->player.height = 30;
-	w->player.x = WIN_WIDTH / 2;
-	w->player.y = WIN_HEIGHT / 2;
-	w->player.ang = 0 * M_PI / 180;
-
 	// map
 	map_init(w);
 
+	// player
+	w->player.width = w->wall.length / 3;
+	w->player.height = w->wall.length / 3;
+	w->player.x = 4.5 * w->wall.length;
+	w->player.y = 5.5 * w->wall.length;
+	w->player.ang = 0 * M_PI / 180;
+
+	
 	return (0);
 }
 

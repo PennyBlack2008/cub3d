@@ -96,8 +96,8 @@ int					draw_player(t_win *w)
 	double pos_x, pos_y;
 	double add_player_x, add_player_y;
 
-	width = 30;
-	height = 30;
+	width = w->player.width;
+	height = w->player.height;
 
 	// 돌리는 건 성공했는 데, 애초에 사각형의 끝점을 중심으로 그렸기 때문에 내가 원하는 공식을 쓸 수가 없다.
 	x = width / 2 * -1;
