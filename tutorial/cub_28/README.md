@@ -1,81 +1,43 @@
-cub_28 : 레이케스팅 광선 만들기. 이전의 것 보다 더 효율적인 코드입니다.
+cub_28
 
-https://permadi.com/1996/05/ray-casting-tutorial-7/
+광선들이 벽에 부딪히면 멈추도록 cub_26의 코드에서 if 문만 추가하여 만들었습니다.
 
-링크의 이론 대로 코드를 작성하는 것인데, 너무 많이 실패하고 시간을 소비해서
+20201009 추가사항: 함수 mlx_put_image_to_window 를 draw_line 에서 제거하니 속도가 비약적으로 빨라졌습니다.
+20201018 추가사항: 벽의 너비와 플레이어의 가로 세로 길이를 유연하게 설정할 수 있도록 했습니다.(tile length 가 바뀌어도 100 이하의 길이는 출력함)
 
-이 폴더에서 이 영역에 해당되는 것만 일단 최대한 간단히 해보려고 합니다.
+밑의 사진은 코드 업데이트 전이라 결과물과 상이함
 
-광선을 여러군데로 뿌려서 광선이 벽에 부딛히는 지 검사를 하는 예전 코드와 다르게 
+![ray_casting_basic_2](https://user-images.githubusercontent.com/59194905/94107582-c56ce480-fe78-11ea-9c51-ab056503aed7.gif)
 
-벽에 부딛히는 점만 간단한 기하학적인 계산을 통해 계산합니다.
+map.c 의 픽셀이 벽에 해당되는 지 판단해주는 int is_wall(double x, double y, t_win *w) 함수를 사용하였습니다.
 
-코드의 결과
-
-<img width="1002" alt="스크린샷 2020-10-03 오후 5 05 56" src="https://user-images.githubusercontent.com/59194905/94986587-ef21bc00-059a-11eb-842a-04daf1b7031a.png">
-
-여기서 힘들었던 점은
-
-함수 is_wall_ray 의 필요성을 몰랐기 때문입니다. 이 글을 이해하기 전에 TILE의 경계선에 걸치는 점을 계산하는 방법(https://permadi.com/1996/05/ray-casting-tutorial-7/)을 이해해야합니다.
-
-잘못된 생각: 광선이 벽에 부딛히는 점을 계산할 수 있는데, 그 점이 벽에 해당되는 경계선이냐, 벽에 해당되지 않는 경계선이냐가 중요하다고 생각했었습니다.
-
-올바른 생각: 벽에 걸쳐있는 경계선은 벽이 될 때도 있고 벽이 아닐 때도 있습니다. 중요한 것은 광선이 비어있는 공간에서 출발하여 벽을 만났느냐? 입니다. 
-
-광선의 발원지도 함께 고려하여 이것이 벽이냐 아니냐를 판단해야합니다. 그래서 저는 벽에 부딛히는 점을 계산한 좌표에 광선의 방향에 따라 광선이 뚫고 나가는 바로 그 다음 좌표를 함수 is_wall 이라는 것에 넣어 벽인지 판단했습니다.
-
-함수: is_wall
+test2.c 에 있는 함수 draw_ray 코드입니다.
 ```
-int			is_wall(double x, double y, t_win *w)
+int					draw_ray(t_win *w, double ang)
 {
-	if (w->map.map[(int)(y / TILE_LENGTH)][(int)(x / TILE_LENGTH)] == WALL)
-		return (WALL);
-	// printf("w->map.map[%d][%d] = %d\n", (int)(y / TILE_WIDTH), (int)(x / TILE_HEIGHT), w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)]);
-	return (NOT_WALL);
-}
-```
+	int x, y;
+	double pos_x, pos_y;
+	double add_player_x, add_player_y;
 
-함수: is_wall_ray
-```
-int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
-{
-		if (0 == r->ang)
+	x = 0;
+	while (x < WIN_WIDTH / 2)
+	{
+		y = 0;
+		pos_x = x * cos((w->player.ang + ang) * -1) + y * sin((w->player.ang + ang) * -1);
+		pos_y = x * sin((w->player.ang + ang) * -1) * -1 + y * cos((w->player.ang + ang) * -1);
+		add_player_x = pos_x + w->player.x;
+		add_player_y = pos_y + w->player.y;
+		if (add_player_x >= 0 && add_player_y >= 0)
 		{
-			return(is_wall(x + 1, y, w));
+			my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xFF0000);
+			if (is_wall(add_player_x, add_player_y, w) == WALL) // <----- 여기가 중요!
+				break ;
 		}
-		else if (0 < r->ang && r->ang < M_PI_2)
-		{
-			printf("제 1사분면\n");
-			return(is_wall(x + 1, y + 1, w));
-		}
-		else if (M_PI_2 == r->ang)
-		{
-			return(is_wall(x , y + 1, w));
-		}
-		else if (M_PI_2 < r->ang && r->ang < M_PI)
-		{
-			printf("제 2사분면\n");
-			return(is_wall(x - 1, y + 1, w));
-		}
-		else if (M_PI == r->ang)
-		{
-			return(is_wall(x - 1, y, w));
-		}
-		else if (M_PI < r->ang && r->ang < M_PI_2 * 3)
-		{
-			printf("제 3사분면\n");
-			return(is_wall(x - 1, y - 1, w));
-		}
-		else if (M_PI_2 * 3 == r->ang)
-		{
-			return(is_wall(x, y - 1, w));
-		}
-		else if (M_PI_2 * 3 < r->ang && r->ang < 2 * M_PI)
-		{
-			printf("제 4사분면\n");
-			return(is_wall(x + 1, y - 1, w));
-		}
-		
+		x++;
+	}
+	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
 ```
+
+주의할 점은 함수 is_wall 는 move.c 파일에서 이미 많이 사용되고 있으니 변형할 때는 move.c 파일에 있는 함수들도 같이 고려해서 바꾸어야합니다.

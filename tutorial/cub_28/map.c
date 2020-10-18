@@ -1,7 +1,8 @@
-#include "cub_28.h"
-
-#define ROWS 10
+#include "cub_21.h"
+#define ROWS 11
 #define COLS 10
+#define WALL 49 // ascii #1
+#define NOT_WALL 48 // ascii #0
 
 void	map_init(t_win *w)
 {
@@ -23,7 +24,8 @@ void	map_init(t_win *w)
 	w->map.map[6] = "1010001011";
 	w->map.map[7] = "1011100001";
 	w->map.map[8] = "1010000001";
-	w->map.map[9] = "1111111111";
+	w->map.map[9] = "1111000111";
+	w->map.map[10] = "1111111111";
 
 
 }
@@ -34,17 +36,17 @@ void	draw_rectangle(t_win *w, int x, int y, int color)
 	int i, j;
 
 	// x, y 는 각각 원점에서 대각선 위치에 있는 점의 x, y 좌표가 된다. x는 사각형의 너비, y는 사각형의 높이
-	x *= w->R_height / ROWS; // ROWS: 4
-	y *= w->R_width / COLS; // COLS: 10
+	x *= w->wall.length; // ROWS: 4
+	y *= w->wall.length; // COLS: 10
 	// printf("x :%d, y: %d \n", x, y);
 	// 초기값 x
 	i = 0;
-	while (i < w->R_width / COLS)
+	while (i < w->wall.length)
 	{
 		j = 0;
-		while (j < w->R_height / ROWS)
+		while (j < w->wall.length)
 		{
-			my_mlx_pixel_put(&w->img, y + i, x + j, color);
+			my_mlx_pixel_put(&w->img, (y + i) / 4 + w->mini.plot.x, (x + j) / 4 + w->mini.plot.y, color);
 			j++;
 		}
 		i++;
@@ -62,9 +64,6 @@ void	draw_map(t_win *w)
 		j = 0;
 		while (j < COLS)
 		{
-			// printf("%c\n", w->map.map[i][j]);
-			// printf("j: %d\n", j);
-			// printf("i: %d j: %d\n", i, j);
 			if (w->map.map[i][j] == '1')
 				draw_rectangle(w, i, j, 0xFFFFFF);
 			else if (w->map.map[i][j] == '0')
@@ -73,91 +72,19 @@ void	draw_map(t_win *w)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(w->mlx, w->ptr, w->img.ptr, 0, 0);
 }
 
 /*
 ** int						is_wall(int x, int y, t_win *w)
 ** 확인하고자 하는 픽셀의 좌표를 넣으면 그 픽셀이 벽인지 확인 해주는 함수, 1이면 벽, 0이면 벽이 아니다.
-** 픽셀 좌표 x, y 에 각각 TILE_WIDTH, TILE_HEIGHT 를 나누어 이것이 char **map에 어떤 인덱스에
-** 속하는 지 알아보고 map[x * TILE_WIDTH][y * TILE_HEIGHT]가 0이면 벽이아니고 1이면 벽으로 결정
+** 픽셀 좌표 x, y 에 각각 w->wall.length, w->wall.length 를 나누어 이것이 char **map에 어떤 인덱스에
+** 속하는 지 알아보고 map[x * w->wall.length][y * w->wall.length]가 0이면 벽이아니고 1이면 벽으로 결정
 */
 
 int			is_wall(double x, double y, t_win *w)
 {
-	int X;
-	int Y;
-
-	Y = (int)(y / TILE_LENGTH);
-	if (y / TILE_LENGTH > 9)
-		Y = 9;
-	else if (y / TILE_LENGTH < 0)
-		Y = 0;
-
-	X = (int)(x / TILE_LENGTH);
-	if (x / TILE_LENGTH > 9)
-		X = 9;
-	else if (x / TILE_LENGTH < 0)
-		X = 0;
-
-	if (w->map.map[Y][X] == WALL)
+	if (w->map.map[(int)(y / w->wall.length)][(int)(x / w->wall.length)] == WALL)
 		return (WALL);
-	// printf("w->map.map[%d][%d] = %d\n", (int)(y / TILE_WIDTH), (int)(x / TILE_HEIGHT), w->map.map[(int)(y / TILE_HEIGHT)][(int)(x / TILE_WIDTH)]);
+	// printf("w->map.map[%d][%d] = %d\n", (int)(y / w->wall.length), (int)(x / w->wall.length), w->map.map[(int)(y / w->wall.length)][(int)(x / w->wall.length)]);
 	return (NOT_WALL);
-}
-
-// 8 분의 1로 나누어 계산하는 것이 맞을듯
-int			is_wall_ray(double x, double y, t_ray *r, t_win *w)
-{
-	r->ang = normalize_angle(r->ang);
-	if (0 == r->ang)
-	{
-		return(is_wall(x, y, w));
-	}
-	else if (0 < r->ang && r->ang < M_PI_4)
-	{
-		return(is_wall(x, y, w));
-	}
-	else if (M_PI_4 < r->ang && r->ang < M_PI_2)
-	{
-		return(is_wall(x, y, w));
-	}
-	else if (M_PI_2 == r->ang)
-	{
-		return(is_wall(x , y, w));
-	}
-	else if (M_PI_2 < r->ang && r->ang < M_PI_2 + M_PI_4)
-	{
-		return(is_wall(x, y, w));
-	}
-	else if (M_PI_2 + M_PI_4 < r->ang && r->ang < M_PI)
-	{
-		return(is_wall(x - 1, y, w));
-	}
-	else if (M_PI == r->ang)
-	{
-		return(is_wall(x - 1, y, w));
-	}
-	else if (M_PI < r->ang && r->ang < M_PI + M_PI_4)
-	{
-		return(is_wall(x - 1, y, w));
-	}
-	else if (M_PI + M_PI_4 < r->ang && r->ang < M_PI_2 * 3)
-	{
-		return(is_wall(x, y - 1, w));
-	}
-	else if (M_PI_2 * 3 == r->ang)
-	{
-		return(is_wall(x, y - 1, w));
-	}
-	else if (M_PI_2 * 3 < r->ang && r->ang < M_PI_2 * 3 + M_PI_4)
-	{
-		return(is_wall(x, y - 1, w));
-	}
-	else if (M_PI_2 * 3 + M_PI_4 < r->ang && r->ang < 2 * M_PI)
-	{
-		return(is_wall(x, y, w));
-	}
-
-	return (0);
 }
