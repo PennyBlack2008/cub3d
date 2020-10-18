@@ -43,7 +43,6 @@ int					cast_a_ray(t_win *w, t_ray *r)
 	}
 	r->x = add_player_x;
 	r->y = add_player_y;
-	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
 }
 

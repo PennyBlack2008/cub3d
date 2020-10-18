@@ -1,6 +1,4 @@
 #include "cub_21.h"
-#define ROWS 10
-#define COLS 10
 
 void	map_init(t_win *w)
 {
@@ -33,17 +31,17 @@ void	draw_rectangle(t_win *w, int x, int y, int color)
 	int i, j;
 
 	// x, y 는 각각 원점에서 대각선 위치에 있는 점의 x, y 좌표가 된다. x는 사각형의 너비, y는 사각형의 높이
-	x *= w->R_height / ROWS; // ROWS: 4
-	y *= w->R_width / COLS; // COLS: 10
+	x *= w->wall.length; // ROWS: 4
+	y *= w->wall.length; // COLS: 10
 	// printf("x :%d, y: %d \n", x, y);
 	// 초기값 x
 	i = 0;
-	while (i < w->R_width / COLS)
+	while (i < w->wall.length)
 	{
 		j = 0;
-		while (j < w->R_width / ROWS)
+		while (j < w->wall.length)
 		{
-			my_mlx_pixel_put(&w->img, (y + i) / 4 + w->mini.plot.y, (x + j) / 4 + w->mini.plot.y, color);
+			my_mlx_pixel_put(&w->img, (y + i) / 4 + w->mini.plot.x, (x + j) / 4 + w->mini.plot.y, color);
 			j++;
 		}
 		i++;
@@ -61,9 +59,6 @@ void	draw_map(t_win *w)
 		j = 0;
 		while (j < COLS)
 		{
-			// printf("%c\n", w->map.map[i][j]);
-			// printf("j: %d\n", j);
-			// printf("i: %d j: %d\n", i, j);
 			if (w->map.map[i][j] == '1')
 				draw_rectangle(w, i, j, 0xFFFFFF);
 			else if (w->map.map[i][j] == '0')
@@ -72,7 +67,6 @@ void	draw_map(t_win *w)
 		}
 		i++;
 	}
-	// mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 }
 
 /*

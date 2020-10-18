@@ -34,6 +34,10 @@
 
 # define KEY_ESC		53
 
+// MAP
+# define ROWS 10
+# define COLS 10
+
 // WALL
 # define WALL			49 // ascii #1
 # define NOT_WALL		48 // ascii #0

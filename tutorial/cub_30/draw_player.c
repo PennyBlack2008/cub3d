@@ -20,7 +20,7 @@ int					draw_background(t_win *w)
 
 int					draw_player(t_win *w)
 {
-	int width, height;
+	int width;
 	int	x, y;
 	double pos_x, pos_y;
 	double add_player_x, add_player_y;
@@ -29,10 +29,10 @@ int					draw_player(t_win *w)
 
 	// 돌리는 건 성공했는 데, 애초에 사각형의 끝점을 중심으로 그렸기 때문에 내가 원하는 공식을 쓸 수가 없다.
 	x = width / 2 * -1;
-	while (x < width/2)
+	while (x < width / 2)
 	{
 		y = width / 2 * -1;
-		while (y < width/2)
+		while (y < width / 2)
 		{
 			pos_x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
 			pos_y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);

@@ -1,9 +1,5 @@
 #include "cub_21.h"
 
-#define NINETY_DEGREE 90 * M_PI / 180
-#define WALL 49
-#define NOT_WALL 48
-
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char				*dst;
@@ -102,11 +98,15 @@ int					init_struct_win(t_win *w)
 	w->img.ptr = mlx_new_image(w->mlx, WIN_WIDTH, WIN_HEIGHT);		w->img.addr = mlx_get_data_addr(w->img.ptr, &w->img.bits_per_pixel, &w->img.line_length, &w->img.endian);
 	w->img.x = 0;		w->img.y = 0; // 이미지의 위치
 
+	// wall
+	w->wall.length = 100;
+	w->wall.height = 600;
+
 	// player
-	w->player.width = 15;
-	w->player.height = 15;
-	w->player.x = WIN_WIDTH / 2;
-	w->player.y = WIN_HEIGHT / 2;
+	w->player.width = w->wall.length / 3;
+	w->player.height = w->wall.length / 3;
+	w->player.x = 4 * w->wall.length;
+	w->player.y = 4 * w->wall.length;
 	w->player.ang = 0 * M_PI / 180;
 
 	// map
@@ -115,10 +115,6 @@ int					init_struct_win(t_win *w)
 	// minimap
 	w->mini.plot.x = w->R_width - 300;
 	w->mini.plot.y = w->R_height - 300;
-
-	// wall
-	w->wall.length = 100;
-	w->wall.height = 600;
 
 	return (0);
 }

@@ -21,6 +21,7 @@ void		draw_wall(int i, t_ray *r, t_win *w)
 
 	// printf("%d 번째: r->x is %f, r->y if %f\n", i, r->x, r->y);
 	dist_to_wall = hypot(r->x - w->player.x, r->y - w->player.y) * cos(r->ang);
+	// dist_to_wall = hypot(r->x - w->player.x, r->y - w->player.y);
 	// printf("dist_to_wall : %f\n", dist_to_wall);
 	pjtd_height = w->wall.height * w->player.projected_plane / dist_to_wall;
 	if (pjtd_height > w->R_height)
