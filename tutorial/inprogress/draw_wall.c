@@ -24,9 +24,14 @@ double				get_which_wall(t_ray *r, t_win *w)
 	if (ray_ang > M_PI_4 * 7 || ray_ang < M_PI_4)
 	{
 		r->wall_NSEW = EAST;
-		x = r->wall.y - r->y;
+		x = r->y - r->wall.y;
 		// printf("ray_ang: %f\n", ray_ang * 180 / M_PI);
 		// printf("EAST: %f\n", x);
+		if (x < 0)
+		{
+			printf("EAST: %f r->y : %d r->wall.y: %f\n", x, r->y, r->wall.y); // -로 튕기는 경우가 있다.
+			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
+		}
 	}
 	else if (ray_ang > M_PI_4 && ray_ang < M_PI_4 * 3)
 	{
@@ -41,14 +46,24 @@ double				get_which_wall(t_ray *r, t_win *w)
 	else if (ray_ang > M_PI_4 * 3 && ray_ang < M_PI_4 * 5)
 	{
 		r->wall_NSEW = WEST;
-		x = r->wall.y - r->y;
+		x = r->y - r->wall.y;
 		// printf("West: %f\n", x);
+		if (x < 0)
+		{
+			printf("WEST: %f r->y : %d r->wall.y: %f\n", x, r->y, r->wall.y); // -로 튕기는 경우가 있다.
+			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
+		}
 	}
 	else if (ray_ang > M_PI_4 * 5 && ray_ang < M_PI_4 * 7)
 	{
 		r->wall_NSEW = NORTH;
 		x = r->x - r->wall.x;
 		// printf("North: %f\n", x);
+		if (x < 0)
+		{
+			printf("North: %f r->x : %d r->wall.x: %f\n", x, r->x, r->wall.x); // -로 튕기는 경우가 있다.
+			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
+		}
 	}
 	return (x);
 }
@@ -61,6 +76,7 @@ int					get_color_tex(double y, double scale, t_ray *r, t_win *w)
 
 	x = get_which_wall(r, w); // 여기서 x 에 넣어줄 값을 정한다.
 	px = floor(x / (100 / 64)); // x 에서 받는 scale 은 100 -> 64이다.
+	// py = floor(y / scale);
 	py = floor(y / scale);
 	color = w->map.curr_tex[(int)(64 * py + px)];
 	return (color);

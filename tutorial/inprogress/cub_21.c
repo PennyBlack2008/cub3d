@@ -135,7 +135,7 @@ int					init_struct_win(t_win *w)
 		}
 		i++;
 	}
-	mlx_destroy_image(w->mlx, w->tex.ptr);	
+	mlx_destroy_image(w->mlx, w->tex.ptr);
 
 	return (0);
 }
