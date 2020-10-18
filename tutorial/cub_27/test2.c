@@ -86,10 +86,9 @@ int					draw_player(t_win *w)
 {
 	int width, height;
 	int	x, y;
-	int x_original, y_original;
-	double pos_x, pos_y;
-	double add_player_x, add_player_y;
-
+	t_plot	plot;
+	t_plot	plot_player;
+	
 	width = w->player.width;
 	height = w->player.height;
 
@@ -97,19 +96,17 @@ int					draw_player(t_win *w)
 	x = width / 2 * -1;
 	while (x < width/2)
 	{
-		y = height / 2 * -1;
-		while (y < height/2)
+		y = width / 2 * -1;
+		while (y < width / 2)
 		{
-			x_original = x + w->player.x;
-			y_original = y + w->player.y;
-			pos_x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
-			pos_y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);
-			add_player_x = pos_x + w->player.x;
-			add_player_y = pos_y + w->player.y;
-			if (add_player_x >= 0 && add_player_y >= 0)
+			plot.x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
+			plot.y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);
+			plot_player.x = plot.x + w->player.x;
+			plot_player.y = plot.y + w->player.y;
+			if (plot_player.x >= 0 && plot_player.y >= 0)
 			{
-				my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xbbccff);
-				// printf("%d %d\n", round_num_AND_int(add_player_x), round_num_AND_int(add_player_y));
+				my_mlx_pixel_put(&w->img, plot_player.x, plot_player.y, 0xbbccff);
+				// printf("%d %d\n", round_num_AND_int(plot_player.x), round_num_AND_int(plot_player.y));
 			}
 			y++;
 		}
@@ -120,14 +117,14 @@ int					draw_player(t_win *w)
 	while (x < width / 2 + 30)
 	{
 		y = 0;
-		pos_x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
-		pos_y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);
-		add_player_x = pos_x + w->player.x;
-		add_player_y = pos_y + w->player.y;
-		if (add_player_x >= 0 && add_player_y >= 0)
+		plot.x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
+		plot.y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);
+		plot_player.x = plot.x + w->player.x;
+		plot_player.y = plot.y + w->player.y;
+		if (plot_player.x >= 0 && plot_player.y >= 0)
 		{
-			my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0xFF0000);
-			// printf("%d %d\n", round_num_AND_int(add_player_x), round_num_AND_int(add_player_y));
+			my_mlx_pixel_put(&w->img, plot_player.x, plot_player.y, 0xFF0000);
+			// printf("%d %d\n", round_num_AND_int(plot_player.x), round_num_AND_int(plot_player.y));
 		}
 		x++;
 	}
@@ -137,14 +134,14 @@ int					draw_player(t_win *w)
 	while (y < height / 2 + 30)
 	{
 		x = 0;
-		pos_x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
-		pos_y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);
-		add_player_x = pos_x + w->player.x;
-		add_player_y = pos_y + w->player.y;
-		if (add_player_x >= 0 && add_player_y >= 0)
+		plot.x = x * cos(w->player.ang * -1) + y * sin(w->player.ang * -1);
+		plot.y = x * sin(w->player.ang * -1) * -1 + y * cos(w->player.ang * -1);
+		plot_player.x = plot.x + w->player.x;
+		plot_player.y = plot.y + w->player.y;
+		if (plot_player.x >= 0 && plot_player.y >= 0)
 		{
-			my_mlx_pixel_put(&w->img, add_player_x, add_player_y, 0x0000FF);
-			// printf("%d %d\n", round_num_AND_int(add_player_x), round_num_AND_int(add_player_y));
+			my_mlx_pixel_put(&w->img, plot_player.x, plot_player.y, 0x0000FF);
+			// printf("%d %d\n", round_num_AND_int(plot_player.x), round_num_AND_int(plot_player.y));
 		}
 		y++;
 	}
