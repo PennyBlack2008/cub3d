@@ -34,6 +34,10 @@
 
 # define KEY_ESC		53
 
+// WALL
+# define WALL 49 // ascii #1
+# define NOT_WALL 48 // ascii #0
+
 /*
 ** Center of the Projection Plane = (160,100)
 ** Distance to the Projection Plane = 277 units
@@ -115,7 +119,7 @@ void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int						draw_player(t_win *w);
 int						draw_grid(t_win *w);
 int						draw_background(t_win *w);
-void					draw_line(int p1_x, int p1_y, int p2_x, int p2_y, int color, t_win *w);
+void					draw_line(t_plot p1, t_plot p2, int color, t_win *w);
 void					map_init(t_win *w);
 void					draw_map(t_win *w);
 void					draw_rectangle(t_win *w, int x, int y, int color);

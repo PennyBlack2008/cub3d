@@ -1,9 +1,5 @@
 #include "cub_21.h"
 
-#define NINETY_DEGREE 90 * M_PI / 180
-#define WALL 49
-#define NOT_WALL 48
-
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char				*dst;
@@ -71,11 +67,6 @@ int				key_press(int keycode, t_win *w)
 	}
 	if (keycode == KEY_H)
 	{
-		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
-		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
-		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
-		draw_line(0, 0, WIN_WIDTH, WIN_HEIGHT, 0x00FF00, w);
-
 	}
 	if (keycode == KEY_G)
 	{
