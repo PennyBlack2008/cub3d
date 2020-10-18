@@ -40,18 +40,17 @@
 ** Angle between subsequent rays = 60/320 degrees
 */
 
-typedef struct	s_pos
+typedef struct	s_plot
 {
 	double		x;
 	double		y;
-}				t_pos;
+}				t_plot;
 
 typedef struct			s_wall
 {
 	int					length;
 	int					height;
 }						t_wall;
-
 
 typedef struct			s_player
 {
@@ -92,6 +91,13 @@ typedef struct	s_map
 	int			j;
 }				t_map;
 
+typedef struct	s_ray
+{
+	t_plot		hit; // 벽에 부딛힌 좌표
+	double		ang; // 플레이어 기준에서 ray 의 고유한 각도
+	int			wall_NSEW; // 부딛힌 벽 방향 NO: 0, SO: 1, EA: 2, WE: 3
+}				t_ray;
+
 
 typedef struct 			s_win
 {
@@ -120,7 +126,7 @@ int						move_forward(t_win *w);
 int						move_back(t_win *w);
 int						move_left(t_win *w);
 int						move_right(t_win *w);
-int						draw_ray(t_win *w, double ang);
+int						draw_ray(t_ray *r, t_win *w);
 int						draw_rays(t_win *w);
 
 #endif

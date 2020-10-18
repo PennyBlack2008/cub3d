@@ -18,7 +18,7 @@ double				normalize_angle(double ang)
 **	우측 작대기 함수를 약간 변형해서 draw_rays 의 각도를 받아 WIN_WIDTH 의 길이만큼의 광선을 출력하는 함수입니다.
 */
 
-int					draw_ray(t_win *w, double ang)
+int					draw_ray(t_ray *r, t_win *w)
 {
 	int x, y;
 	double pos_x, pos_y;
@@ -28,8 +28,8 @@ int					draw_ray(t_win *w, double ang)
 	while (x < WIN_WIDTH * 2)
 	{
 		y = 0;
-		pos_x = x * cos((w->player.ang + ang) * -1) + y * sin((w->player.ang + ang) * -1);
-		pos_y = x * sin((w->player.ang + ang) * -1) * -1 + y * cos((w->player.ang + ang) * -1);
+		pos_x = x * cos(r->ang * -1) + y * sin(r->ang * -1);
+		pos_y = x * sin(r->ang * -1) * -1 + y * cos(r->ang * -1);
 		add_player_x = pos_x + w->player.x;
 		add_player_y = pos_y + w->player.y;
 		if (add_player_x >= 0 && add_player_y >= 0)
@@ -46,12 +46,16 @@ int					draw_ray(t_win *w, double ang)
 
 int					draw_rays(t_win *w)
 {
-	double ang;		ang = M_PI / 6;
+	t_ray		r[w->R_width];
+	int			i;				i = 0;
+	double		ray_ang;		ray_ang = -1 * M_PI / 6;
 
-	while (ang > -1 * M_PI / 6)
+	while (ray_ang < M_PI / 6)
 	{
-		draw_ray(w, ang);
-		ang -= M_PI / 3 / 1000;
+		r[i].ang = normalize_angle(w->player.ang + ray_ang);
+		draw_ray(&(r[i]), w);
+		ray_ang += M_PI / 3 / 999;
+		i++;
 	}
 	mlx_put_image_to_window(w->mlx, w->win, w->img.ptr, 0, 0);
 	return (0);
