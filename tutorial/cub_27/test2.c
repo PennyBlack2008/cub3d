@@ -76,18 +76,6 @@ int					draw_background(t_win *w)
 	return (0);
 }
 
-int					round_num_AND_int(double num)
-{
-	double N;
-	int neg;
-
-	N = fabs(num);
-	neg = fabs(num) / num;
-	if (N - (int)N >= 0.5)
-		N = (int)N + 1;
-	return (neg * N);
-}
-
 int					draw_player(t_win *w)
 {
 	int width, height;

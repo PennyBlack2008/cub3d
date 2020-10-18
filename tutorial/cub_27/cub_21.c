@@ -95,7 +95,7 @@ int					init_struct_win(t_win *w)
 	w->R_height = WIN_HEIGHT;
 
 	// 벽
-	w->wall.length = 100;
+	w->wall.length = 50;
 
 	// 윈도우
 	w->win = mlx_new_window(w->mlx, w->R_width, w->R_height, "veryluckymanjinwoo");

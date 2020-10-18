@@ -1,5 +1,5 @@
 #include "cub_21.h"
-#define ROWS 10
+#define ROWS 11
 #define COLS 10
 #define WALL 49 // ascii #1
 #define NOT_WALL 48 // ascii #0
@@ -24,7 +24,8 @@ void	map_init(t_win *w)
 	w->map.map[6] = "1010001011";
 	w->map.map[7] = "1011100001";
 	w->map.map[8] = "1010000001";
-	w->map.map[9] = "1111111111";
+	w->map.map[9] = "1111000111";
+	w->map.map[10] = "1111111111";
 
 
 }
