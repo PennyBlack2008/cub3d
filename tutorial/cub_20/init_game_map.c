@@ -315,7 +315,7 @@ int							init_game_map(t_map *m)
 
 	if (!(m = init_struct_map(m)))
 	{
-		write(1, "init_strcuct_map error!!\n", 26);
+		write(2, "init_strcuct_map error!!\n", 26);
 		return (ERROR);
 	}
 
@@ -329,7 +329,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_resolution_spec(line, m))
 			{
-				write(1, "Resolution input error\n", 24);
+				write(2, "Resolution input error\n", 24);
 			}
 			printf("R_width: %d		R_height: %d\n", m->info.R_width, m->info.R_height);
 		}
@@ -337,7 +337,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_rgb_spec(&line, &m->info.FL_R, &m->info.FL_G, &m->info.FL_B))
 			{
-				write(1, "Floor input error\n", 19);
+				write(2, "Floor input error\n", 19);
 			}
 			printf("FL_R: %d		FL_G: %d		FL_B: %d\n",m->info.FL_R,m->info.FL_G,m->info.FL_B);
 		}
@@ -345,7 +345,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_rgb_spec(&line, &m->info.CL_R, &m->info.CL_G, &m->info.CL_B))
 			{
-				write(1, "Ceiling input error\n", 19);
+				write(2, "Ceiling input error\n", 19);
 			}
 			printf("CL_R: %d		CL_G: %d		CL_B: %d\n",m->info.CL_R,m->info.CL_G,m->info.CL_B);
 		}
@@ -353,7 +353,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_texture_dir(&line, &m->info.sprite_texture))
 			{
-				write(1, "Sprite texture input error\n", 19);
+				write(2, "Sprite texture input error\n", 19);
 			}
 			printf("Sprite texture dir: %s\n", m->info.sprite_texture);
 		}
@@ -361,7 +361,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_texture_dir(&line, &m->info.NO_texture))
 			{
-				write(1, "Northern texture input error\n", 19);
+				write(2, "Northern texture input error\n", 19);
 			}
 			printf("Northern texture dir: %s\n",m->info.NO_texture);
 		}
@@ -369,7 +369,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_texture_dir(&line, &m->info.SO_texture))
 			{
-				write(1, "Southern texture input error\n", 19);
+				write(2, "Southern texture input error\n", 19);
 			}
 			printf("Southern texture dir: %s\n",m->info.SO_texture);
 		}
@@ -377,7 +377,7 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_texture_dir(&line, &m->info.WE_texture))
 			{
-				write(1, "Western texture input error\n", 19);
+				write(2, "Western texture input error\n", 19);
 			}
 			printf("Western texture dir: %s\n",m->info.WE_texture);
 		}
@@ -385,14 +385,14 @@ int							init_game_map(t_map *m)
 		{
 			if (ERROR == parse_texture_dir(&line, &m->info.EA_texture))
 			{
-				write(1, "Eastern texture input error\n", 19);
+				write(2, "Eastern texture input error\n", 19);
 			}
 			printf("Eastern texture dir: %s\n",m->info.EA_texture);
 		}
 		else if (line[0] == '\t' || line[0] == ' ' || line[0] == '1')
 		{
 			if (ERROR == map_line(m, &line))
-				write(1, "map_line error\n", 16);
+				write(2, "map_line error\n", 16);
 		}
 		free(line);
 		line = NULL;
