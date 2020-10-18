@@ -3,7 +3,7 @@ LIBFT_DIR		=	./../libft
 MINILIB_DIR		=	./../minilibx
 
 SRCS			=	cub_21.c\
-					test2.c\
+					draw.c\
 					bresenhem.c\
 					map.c\
 					move.c\
@@ -13,7 +13,7 @@ SRCS			=	cub_21.c\
 # OBJS			=	$(SRCS:.c=.o)
 # 위의 명령어로 돌리면 cub_17 에 get_next_line.o 가 생성되고 OBJS 명령어는 그 파일을 gnl 폴더에서 찾는다.
 OBJS			=	cub_21.o\
-					test2.o\
+					draw.o\
 					bresenhem.o\
 					map.o\
 					move.o\
