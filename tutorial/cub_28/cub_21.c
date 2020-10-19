@@ -103,7 +103,7 @@ int					init_struct_win(t_win *w)
 
 	// player
 	w->player.width = w->wall.length / 3;
-	w->player.height = 500;
+	w->player.height = 500; // 변경하면 segfault! draw_wall 이 중점이 500에 맞춰져 계산하기 때문
 	w->player.x = 4.5 * w->wall.length;
 	w->player.y = 5.5 * w->wall.length;
 	w->player.ang = 0 * M_PI / 180;
