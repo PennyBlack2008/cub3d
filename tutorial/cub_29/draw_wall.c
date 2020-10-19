@@ -30,21 +30,21 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 	// printf("pjtd_height : %f\n", pjtd_height);
 	// printf("w->player.projected_plane : %f\n", w->player.projected_plane);
 
-	int j;		j = 0;		int k;		k = pjtd_height / 2 - 1;
+	int j;		j = 0;		int k;		k = (pjtd_height / 2) - 1;
 
-	r->ceiling = k;
+	r->ceiling = w->player.height - k;
 	// 중간인 500 은 위쪽 while 에서 처리
 	while (j < pjtd_height / 2)
 	{
-		my_mlx_pixel_put(&w->img, i, w->R_height - w->player.height + j, 0x00ff00);
+		my_mlx_pixel_put(&w->img, i, w->player.height + j, 0x00ff00);
 		j++;
 	}
 	while (k > 0)
 	{
-		my_mlx_pixel_put(&w->img, i, w->R_height - w->player.height - k, 0x00ff00);
+		my_mlx_pixel_put(&w->img, i, w->player.height - k, 0x00ff00);
 		k--;
 	}
-	r->floor = pjtd_height + k;
+	r->floor = w->player.height + j;
 }
 
 void		draw_ceiling(int i, t_ray *r, t_win *w)
