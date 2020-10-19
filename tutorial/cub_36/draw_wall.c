@@ -9,44 +9,44 @@ double				get_which_wall(t_ray *r, t_win *w)
 	if (ray_ang > M_PI_4 * 7 || ray_ang < M_PI_4)
 	{
 		r->wall_NSEW = EAST;
-		x = r->y - r->wall.y;
+		x = r->hit.y - r->wall.y;
 		// printf("ray_ang: %f\n", ray_ang * 180 / M_PI);
 		// printf("EAST: %f\n", x);
 		if (x < 0)
 		{
-			printf("EAST: %f r->y : %d r->wall.y: %f\n", x, r->y, r->wall.y); // -로 튕기는 경우가 있다.
+			printf("EAST: %f r->hit.y : %f r->wall.y: %f\n", x, r->hit.y, r->wall.y); // -로 튕기는 경우가 있다.
 			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
 		}
 	}
 	else if (ray_ang > M_PI_4 && ray_ang < M_PI_4 * 3)
 	{
 		r->wall_NSEW = SOUTH;
-		x = r->x - r->wall.x;
+		x = r->hit.x - r->wall.x;
 		if (x < 0)
 		{
-			printf("South: %f r->x : %d r->wall.x: %f\n", x, r->x, r->wall.x); // -로 튕기는 경우가 있다.
+			printf("South: %f r->hit.x : %f r->wall.x: %f\n", x, r->hit.x, r->wall.x); // -로 튕기는 경우가 있다.
 			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
 		}
 	}
 	else if (ray_ang > M_PI_4 * 3 && ray_ang < M_PI_4 * 5)
 	{
 		r->wall_NSEW = WEST;
-		x = r->y - r->wall.y;
+		x = r->hit.y - r->wall.y;
 		// printf("West: %f\n", x);
 		if (x < 0)
 		{
-			printf("WEST: %f r->y : %d r->wall.y: %f\n", x, r->y, r->wall.y); // -로 튕기는 경우가 있다.
+			printf("WEST: %f r->hit.y : %f r->wall.y: %f\n", x, r->hit.y, r->wall.y); // -로 튕기는 경우가 있다.
 			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
 		}
 	}
 	else if (ray_ang > M_PI_4 * 5 && ray_ang < M_PI_4 * 7)
 	{
 		r->wall_NSEW = NORTH;
-		x = r->x - r->wall.x;
+		x = r->hit.x - r->wall.x;
 		// printf("North: %f\n", x);
 		if (x < 0)
 		{
-			printf("North: %f r->x : %d r->wall.x: %f\n", x, r->x, r->wall.x); // -로 튕기는 경우가 있다.
+			printf("North: %f r->hit.x : %f r->wall.x: %f\n", x, r->hit.x, r->wall.x); // -로 튕기는 경우가 있다.
 			printf("%d\n", (int)(x / w->wall.length) * w->wall.length);
 		}
 	}
@@ -90,7 +90,7 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 	// printf("%d 번째: r->hit.x is %f, r->hit.y if %f\n", i, r->hit.x, r->hit.y);
 	dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y) * fabs(cos(r->ang - w->player.ang));
 	// dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y);
-	// dist_to_wall = hypot(r->x - w->player.x, r->y - w->player.y);
+	// dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y);
 	printf("dist_to_wall : %f\n", dist_to_wall);
 	pjtd_height = w->wall.height * w->player.projected_plane / dist_to_wall;
 	if (pjtd_height > w->R_height)

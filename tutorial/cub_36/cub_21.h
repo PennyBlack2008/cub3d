@@ -122,6 +122,7 @@ typedef struct	s_map
 typedef struct	s_ray
 {
 	t_plot		hit; // 벽에 부딛힌 좌표
+	t_plot		wall; // hit 점이 위치한 wall의 왼쪽 위 좌표
 	double		ang; // 플레이어 기준에서 ray 의 고유한 각도
 	int			wall_NSEW; // 부딛힌 벽 방향 NO: 0, SO: 1, EA: 2, WE: 3
 	int			ceiling;
@@ -165,5 +166,6 @@ void					draw_a_wall(int i, t_ray *r, t_win *w);
 void					draw_minimap(t_ray *r, t_win *w);
 void					draw_ceiling(int i, t_ray *r, t_win *w);
 void					draw_floor(int i, t_ray *r, t_win *w);
+double					normalize_angle(double ang);
 
 #endif

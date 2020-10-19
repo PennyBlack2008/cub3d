@@ -63,6 +63,9 @@ int					draw_a_ray(t_ray *r, t_win *w)
 	}
 	r->hit.x = plot_player.x;
 	r->hit.y = plot_player.y;
+	r->wall.x = (int)(r->hit.x / w->wall.length) * w->wall.length;
+	r->wall.y = (int)(r->hit.y / w->wall.length) * w->wall.length;
+	
 	return (0);
 }
 
