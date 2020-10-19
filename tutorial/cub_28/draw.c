@@ -70,14 +70,14 @@ int					draw_rays(t_win *w)
 {
 	t_ray		r[w->R_width];
 	int			i;				i = 0;
-	double		ray_ang;		ray_ang = -1 * M_PI / 6;
+	double		ray_ang;		ray_ang = -1 * w->fov_ang / 2;
 
-	while (ray_ang < M_PI / 6)
+	while (ray_ang < w->fov_ang / 2)
 	{
 		r[i].ang = normalize_angle(w->player.ang + ray_ang);
 		draw_a_ray(&(r[i]), w);
 		draw_a_wall(i, &(r[i]), w);
-		ray_ang += M_PI / 3 / 999;
+		ray_ang += w->fov_ang / (w->R_width - 1);
 		i++;
 	}
 	draw_minimap(r, w);

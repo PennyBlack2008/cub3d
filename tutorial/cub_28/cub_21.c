@@ -84,10 +84,11 @@ int					init_struct_win(t_win *w)
 	// 해상도
 	w->R_width = WIN_WIDTH;
 	w->R_height = WIN_HEIGHT;
+	w->fov_ang = M_PI / 3; // 60도
 	w->player.projected_plane = w->R_width / 2 * atan(M_PI_2 / 3);
 
 	// 벽
-	w->wall.length = 50;
+	w->wall.length = 100;
 	w->wall.height = 600;
 
 	// 윈도우
