@@ -103,7 +103,7 @@ int					init_struct_win(t_win *w)
 
 	// player
 	w->player.width = w->wall.length / 3;
-	w->player.height = w->wall.length / 3;
+	w->player.height = 500;
 	w->player.x = 4.5 * w->wall.length;
 	w->player.y = 5.5 * w->wall.length;
 	w->player.ang = 0 * M_PI / 180;

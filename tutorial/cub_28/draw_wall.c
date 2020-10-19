@@ -20,7 +20,7 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 	double pjtd_height;
 
 	// printf("%d 번째: r->hit.x is %f, r->hit.y if %f\n", i, r->hit.x, r->hit.y);
-	dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y) * fabs(cos(r->ang));
+	dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y) * fabs(cos(r->ang - w->player.ang));
 	// dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y);
 	// dist_to_wall = hypot(r->x - w->player.x, r->y - w->player.y);
 	printf("dist_to_wall : %f\n", dist_to_wall);
@@ -35,12 +35,12 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 	// 중간인 500 은 위쪽 while 에서 처리
 	while (j < pjtd_height / 2)
 	{
-		my_mlx_pixel_put(&w->img, i, 500 + j, 0x00ff00);
+		my_mlx_pixel_put(&w->img, i, w->R_height - w->player.height + j, 0x00ff00);
 		j++;
 	}
 	while (k > 0)
 	{
-		my_mlx_pixel_put(&w->img, i, 500 - k, 0x00ff00);
+		my_mlx_pixel_put(&w->img, i, w->R_height - w->player.height - k, 0x00ff00);
 		k--;
 	}
 }
