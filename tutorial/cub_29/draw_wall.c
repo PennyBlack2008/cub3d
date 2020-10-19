@@ -32,6 +32,7 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 
 	int j;		j = 0;		int k;		k = pjtd_height / 2 - 1;
 
+	r->ceiling = k;
 	// 중간인 500 은 위쪽 while 에서 처리
 	while (j < pjtd_height / 2)
 	{
@@ -43,6 +44,7 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 		my_mlx_pixel_put(&w->img, i, w->R_height - w->player.height - k, 0x00ff00);
 		k--;
 	}
+	r->floor = pjtd_height + k;
 }
 
 void		draw_ceiling(int i, t_ray *r, t_win *w)

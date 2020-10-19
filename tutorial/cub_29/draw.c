@@ -77,6 +77,8 @@ int					draw_rays(t_win *w)
 		r[i].ang = normalize_angle(w->player.ang + ray_ang);
 		draw_a_ray(&(r[i]), w);
 		draw_a_wall(i, &(r[i]), w);
+		draw_ceiling(i, &(r[i]), w);
+		draw_floor(i, &(r[i]), w);
 		ray_ang += w->fov_ang / (w->R_width - 1);
 		i++;
 	}
