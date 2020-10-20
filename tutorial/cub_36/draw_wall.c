@@ -86,6 +86,8 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 {
 	double dist_to_wall;
 	double pjtd_height;
+	double scale;
+	int		color;
 
 	// printf("%d 번째: r->hit.x is %f, r->hit.y if %f\n", i, r->hit.x, r->hit.y);
 	dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y) * fabs(cos(r->ang - w->player.ang));
@@ -93,6 +95,7 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 	// dist_to_wall = hypot(r->hit.x - w->player.x, r->hit.y - w->player.y);
 	printf("dist_to_wall : %f\n", dist_to_wall);
 	pjtd_height = w->wall.height * w->player.projected_plane / dist_to_wall;
+	scale = pjtd_height / 64;
 	if (pjtd_height > w->R_height)
 		pjtd_height = w->R_height;
 	// printf("pjtd_height : %f\n", pjtd_height);
@@ -102,17 +105,15 @@ void		draw_a_wall(int i, t_ray *r, t_win *w)
 
 	r->ceiling = w->player.height - k;
 	// 중간인 500 은 위쪽 while 에서 처리
-	while (j < pjtd_height / 2)
+	// 중간인 500 은 j while 에서 처리
+	while (j < pjtd_height) // 벽을 아래로 내리기
 	{
-		my_mlx_pixel_put(&w->img, i, w->player.height + j, 0x00ff00);
+		// j 는 어떻게 처리할 것인가? pjtd_height 를 조절하면서 구해야한다.
+		color = get_color_tex(j, scale, r, w);
+		my_mlx_pixel_put(&w->img, i, r->ceiling + j - 1, color);
 		j++;
 	}
-	while (k > 0)
-	{
-		my_mlx_pixel_put(&w->img, i, w->player.height - k, 0x00ff00);
-		k--;
-	}
-	r->floor = w->player.height + j;
+	r->floor = pjtd_height + r->ceiling;
 }
 
 void		draw_ceiling(int i, t_ray *r, t_win *w)
