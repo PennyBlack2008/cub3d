@@ -47,16 +47,6 @@ void					my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	printf("%d\n", color);
 }
 
-int					round_num(double num)
-{
-	if (num >= 0.5)
-		num = (int)num + 1;
-	else
-		num = (int)num;
-
-	return (num);
-}
-
 int					get_color_tex(double x, double y, double scale, t_win *w)
 {
 	int				color;
@@ -71,10 +61,7 @@ int					get_color_tex(double x, double y, double scale, t_win *w)
 int					main()
 {
 	t_win			win;
-	int				h;
-	int				w;
-	int				i, j, k;
-	double			px, py;
+	int				i, j;
 	double			scale;
 	int				color;
 
@@ -105,7 +92,7 @@ int					main()
 	mlx_destroy_image(win.mlx, win.tex.ptr);
 
 	// 두 번째 이미지를 윈도우에 출력해보기
-	scale = 2;
+	scale = 4;
 	i = 0;
 	while (i < 64 * scale) // width
 	{
